@@ -4,6 +4,7 @@
 // La ilahe ill Allah Muhammeden Rasulullah
 
 export const LOCKED_LOGO = {
+  src: "/alarengin.webp",
   color: "#0f7a3d",
   flag: "#ffffff",
   locked: true as const,
@@ -11,7 +12,9 @@ export const LOCKED_LOGO = {
 
 export interface SiteGeneral {
   siteName: string;
-  brandLine2: string;
+  titleTemplate: string;
+  metaDescription: string;
+  metaKeywords: string;
   tagline: string;
   description: string;
   email: string;
@@ -36,10 +39,36 @@ export interface SiteSections {
   contact: SiteSection;
 }
 
+// Panelde/alt bilgide gösterilen zikir — sadece zikirler kalır.
+export interface SiteZikir {
+  text: string;
+}
+
+export const DEFAULT_ZIKIRLER: SiteZikir[] = [
+  { text: "Bismillahir Rahmanir Rahim" },
+  { text: "Elhamdulillah" },
+  { text: "Allahu Ekber" },
+  { text: "SubhanAllah" },
+];
+
 export interface SiteTheme {
   accent: string;
   background: string;
   foreground: string;
+}
+
+export interface SiteSocialLink {
+  label: string;
+  href: string;
+}
+
+// Panelden eklenen özel sayfalar (/malper/sayfa/[slug] ile yayınlanır)
+export interface SiteCustomPage {
+  slug: string;
+  title: string;
+  description: string;
+  content: string;
+  published: boolean;
 }
 
 export interface SiteConfig {
@@ -47,11 +76,21 @@ export interface SiteConfig {
   sections: SiteSections;
   theme: SiteTheme;
   navigation: { href: string; label: string }[];
+  social: SiteSocialLink[];
+  pages: SiteCustomPage[];
+  zikirler: SiteZikir[];
 }
 
 
 export const HALAL_RULES = [
-  "Faiz (ribâ), kumar, şans oyunu ve borsa/spekülasyon reklamı yapılmaz.",
+  "TİCARİ HİÇBİR ŞEY YAPILAMAZ. Site üzerinden satış, ürün tanıtımı, reklam, abonelik, ücretli üyelik, komisyon, bağlantı geliri ve sponsorluk yapılamaz. Site yalnızca bilgi ve davettir.",
+  "Reklam ağı, analitik/pazarlama betikleri ve üçüncü taraf ticari eklentiler (sohbet balonu, popup, takip kodu) siteye eklenemez.",
+  "Dini sömüren vakıf, dernek ve bağış toplama siteleri YASAKTIR. Dini duyguları kullanarak para/tahsilat toplayan hiçbir site kurulamaz, yayınlanamaz ve bu platformda barındırılamaz.",
+  "Yardımlaşma, imece, 'ortak fon' gibi adlar altında yapılan hırsızlık ve dolandırıcılık YASAKTIR.",
+  "Bu platformda HİÇBİR para transferi yapılmaz: ödeme, havale, EFT, IBAN, kripto cüzdan ve bunlar gibi yöntemlerle para alıp verme yeri yoktur.",
+  "Site adı, açıklaması veya içeriğinde bağış çağrısı, zekât/sadaka/yardım hesabı, IBAN ve ödeme isteme yer alamaz.",
+  "Bağış yoluyla gelir kuranlar, dini öne çıkararak maddi çıkar sağlayan siteler tespit edilirse derhal kaldırılır.",
+  "Faiz (ribâ), kumar, şans oyunu ve borsa/spekülasyon yapılmaz ve tanıtılmaz.",
   "Haram ürün (içki, domuz, tesettüre aykırı ürün) tanıtımı ve satışı yapılamaz.",
   "Görsellerde tesettür ve mahremiyet (hicâb) ölçülerine uyulur.",
   "Müzik, dans ve benzeri dini ölçülere aykırı içerik yayınlanmaz.",
@@ -59,50 +98,78 @@ export const HALAL_RULES = [
   "Yalan, iftira, gıybet ve kardeşlik bağını zedeleyen içerik yayınlanmaz.",
 ];
 
+// Dini sömürü denetimi: içerik/paylaşım bu kalıpları taşıyorsa panelde uyarı verir.
+export const DIN_SOMURU_DESENLERI: { etiket: string; kalip: RegExp }[] = [
+  { etiket: "Bağış toplama", kalip: /bağ[ıi]ş|yard[ıi]m topla|sadaka topla/i },
+  { etiket: "Zekât/tahsilat", kalip: /zek[âa]t|tahsilat|havuz hesab[ıi]/i },
+  { etiket: "Para/ödeme çağrısı", kalip: /IBAN|ödeme yap|para gönder|havale et|eft/i },
+  { etiket: "Kripto cüzdan", kalip: /kripto|cüzdan|wallet|USDT|BTC|ETH/i },
+  { etiket: "İmece/ortak fon", kalip: /imece|ortak fon|yard[ıi]mlaşma fon/i },
+  { etiket: "Vakıf/dernek toplama", kalip: /vakf[ıi]|dernek(bi)? .*topla/i },
+  { etiket: "Ticari satış/reklam", kalip: /sat[ıi]n al|sepete ekle|fiyat[ıi]?\s*[:\d]|indirim|kampanya|reklam|sponsor|abonelik|üyelik ücreti|komisyon/i },
+  { etiket: "Üçüncü taraf ticari eklenti", kalip: /google-analytics|gtag\(|fbq\(|adsbygoogle|tawk\.to|intercom|hotjar/i },
+];
+
+export function diniSomuruTespit(metin: string): string[] {
+  if (!metin) return [];
+  return DIN_SOMURU_DESENLERI.filter((d) => d.kalip.test(metin)).map((d) => d.etiket);
+}
+
+// ticari içerik denetimi — dini sömürü denetimiyle aynı kalıp listesini kullanır
+export const TICARI_DESENLERI = DIN_SOMURU_DESENLERI.filter((d) =>
+  ["Ticari satış/reklam", "Üçüncü taraf ticari eklenti", "Kripto cüzdan", "Para/ödeme çağrısı"].includes(d.etiket),
+);
+
+export function ticariIcerikTespit(metin: string): string[] {
+  if (!metin) return [];
+  return TICARI_DESENLERI.filter((d) => d.kalip.test(metin)).map((d) => d.etiket);
+}
+
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
   general: {
-    siteName: "Helal Site",
-    brandLine2: "Kurucusu",
-    tagline: "Müslümanlar için helal web sitesi kurucu",
-    description:
-      "İslami ölçülere uygun, helal bir web sitesini dakikalar içinde kurun. Şablonlar, renkler ve içerikler tamamen panelden; logo değişmez.",
-    email: "merhaba@helalsite.com",
+    siteName: "Emanet",
+    titleTemplate: "%s | Emanet",
+    metaDescription: "Sade, reklamsız ve ticari olmayan bilgi sitesi.",
+    metaKeywords: "emanet, sade site, reklamsız, bağışsız, ticaret yok",
+    tagline: "Emanet",
+    description: "Sade, gösterişsiz, reklamsız ve ticari olmayan bir bilgi sitesi.",
+    email: "merhaba@emanet.site",
     phone: "+90 555 000 00 00",
     address: "İstanbul, Türkiye",
-    footerNote: "El Hamdu Lillahi Rabbil Alemin — Allahu Ekber ve Lillahil Hamd",
+    footerNote: "Emanet",
     logoSize: 40,
   },
   sections: {
     hero: {
-      label: "Helal Site Kurucu",
-      title: "Helal Bir Site, Saniyeler İçinde",
-      text: "Bismillahirrahmanirrahim. İslami kurallara uygun şablonlar, helal içerik denetimi ve tek panelden yönetim. Kâh bir kurum, kâh bir hocaefendi için — aynı sade ve samimi ruh.",
+      label: "",
+      title: "Bismillahir Rahmanir Rahim",
+      text: "",
     },
     work: {
-      label: "Seçili İşler",
-      title: "Çalışmalarımız",
-      text: "Camilerden vakıflara, medreselerden hayır derneklerine; her biri helal ölçüler içinde hazırlanmış işler.",
+      label: "",
+      title: "Yazılar",
+      text: "",
     },
     services: {
-      label: "Hizmetler",
-      title: "Helal Çözümler",
-      text: "Kurumunuza uygun şablonu seçin, renkleri düzenleyin, içerikleri ekleyin. Logo her zaman aynı: yeşil zeminde beyaz sancak.",
+      label: "",
+      title: "Bilgiler",
+      text: "",
     },
     manifesto: {
-      label: "Manifesto",
-      title: "Helal ve Temiz Web",
-      text: "Bizim için site bir vitrin değil, bir emanettir. Her görsel, her kelime helal ölçülere göre seçilir; tıklama uğruna haram reklama yer verilmez.",
+      label: "",
+      title: "",
+      text: "",
     },
     news: {
-      label: "Güncel",
+      label: "",
       title: "Duyurular",
-      text: "Yeni şablonlar, güncellemeler ve helal web üzerine notlar.",
+      text: "",
     },
     contact: {
-      label: "İletişim",
-      title: "Sitenizi birlikte kuralım",
-      text: "Sorularınız için bize yazın. El hamdu lillah ile başlayalım.",
+      label: "",
+      title: "İletişim",
+      text: "",
     },
   },
   theme: {
@@ -118,6 +185,14 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     { href: "/malper/kariyer", label: "Eğitim" },
     { href: "/malper/iletisim", label: "İletişim" },
   ],
+  social: [
+    { label: "IG", href: "#" },
+    { label: "X", href: "#" },
+    { label: "GR", href: "#" },
+    { label: "YT", href: "#" },
+  ],
+  pages: [],
+  zikirler: DEFAULT_ZIKIRLER,
 };
 
 export type SiteConfigKey = keyof SiteConfig;
@@ -127,6 +202,9 @@ export const SITE_CONFIG_KEYS: SiteConfigKey[] = [
   "sections",
   "theme",
   "navigation",
+  "social",
+  "pages",
+  "zikirler",
 ];
 
 
@@ -152,8 +230,39 @@ export function mergeSiteConfig(stored: Record<string, unknown>): SiteConfig {
       (l) => l && typeof l.href === "string" && typeof l.label === "string",
     );
   }
+  const social = stored.social;
+  if (Array.isArray(social)) {
+    out.social = (social as SiteSocialLink[]).filter(
+      (l) => l && typeof l.href === "string" && typeof l.label === "string",
+    );
+  }
+  const zikirler = stored.zikirler;
+  if (Array.isArray(zikirler) && zikirler.length) {
+    out.zikirler = (zikirler as SiteZikir[]).filter(
+      (z) => z && typeof z.text === "string" && z.text.trim(),
+    );
+  }
+  const pages = stored.pages;
+  if (Array.isArray(pages)) {
+    out.pages = (pages as SiteCustomPage[])
+      .filter((p) => p && typeof p.slug === "string" && p.slug.trim())
+      .map((p) => ({ ...p, published: p.published !== false }));
+  }
 
   const size = Number(out.general.logoSize);
   out.general.logoSize = Number.isFinite(size) ? Math.min(96, Math.max(24, size)) : 40;
   return out as SiteConfig;
+}
+
+export function slugifyTitle(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }

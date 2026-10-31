@@ -3,20 +3,31 @@
 // Esselatu vesselamu ala rasulina Muhammedin .
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { destpekLogin } from "@/app/(auth)/login/actions";
 
-// Malper açıkken klavyede "bismillahirrahmanirrahim" yazıldığında şifresiz admin girişi.
+const TRIGGER = "BismillahirRahmanirRahim";
+
+const norm = (v: string) =>
+  v
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("tr")
+    .replace(/ı/g, "i")
+    .replace(/[^a-z]/g, "");
+
+// Malper açıkken klavyede "BismillahirRahmanirRahim" yazıldığında şifresiz admin girişi.
 export default function DestpekLoginListener() {
   const router = useRouter();
-  const bufferRef = useRef("");
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    const TRIGGER = "bismillahirrahmanirrahim";
+    let raw = "";
 
     function onKeyDown(e: KeyboardEvent) {
-      // Yazı alanlarında tetiklenmesin
+      if (busy) return;
+
       const target = e.target as HTMLElement | null;
       if (
         target &&
@@ -27,29 +38,32 @@ export default function DestpekLoginListener() {
         return;
       }
 
-      // Sadece harf tuşlarını kabul et
-      if (e.key.length !== 1 || !/[a-zA-ZçğıöşüÇĞİÖŞÜ]/.test(e.key)) {
+      if (e.key.length !== 1 || !/[a-zA-ZçğıöşüÇĞİÖŞÜ ]/.test(e.key)) {
         return;
       }
 
-      bufferRef.current = (bufferRef.current + e.key.toLowerCase()).slice(-TRIGGER.length);
+      raw = (raw + e.key).slice(-40);
 
-      if (bufferRef.current === TRIGGER) {
-        bufferRef.current = "";
-        destpekLogin(TRIGGER).then((res) => {
-          if (res?.error) {
-            console.warn("girişi başarısız:", res.error);
-            return;
-          }
-          router.push("/");
-          router.refresh();
-        });
+      if (norm(raw).endsWith(norm(TRIGGER))) {
+        const typed = raw.slice(-TRIGGER.length);
+        raw = "";
+        setBusy(true);
+        destpekLogin(typed)
+          .then((res) => {
+            if (res?.error) {
+              console.warn("girişi başarısız:", res.error);
+              return;
+            }
+            router.push("/");
+            router.refresh();
+          })
+          .finally(() => setBusy(false));
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [router]);
+  }, [router, busy]);
 
   return null;
 }

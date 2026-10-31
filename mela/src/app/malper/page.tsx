@@ -16,7 +16,7 @@ export default async function AgencyPage() {
       stats={(site.stats ?? []) as { n: string; l: string }[]}
       cases={(site.cases ?? []) as { brand: string; title: string; tag: string; img: string }[]}
       services={(site.services ?? []) as { n: string; t: string; d: string }[]}
-      clients={(site.clients ?? []) as string[]}
+      news={(site.news ?? []) as { cat: string; date: string; title: string; href?: string }[]}
       config={config}
     />
   );

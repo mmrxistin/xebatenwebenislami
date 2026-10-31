@@ -19,7 +19,7 @@ export default function Page() {
         <div className="flex min-h-[22rem] flex-col justify-between bg-gradient-to-br from-slate-950 via-red-950 to-slate-900 p-7 text-white sm:p-10">
           <div>
             <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-red-100">
-              Yazar Mehmet Karakuş
+              Emanet
             </span>
             <h1 className="mt-8 text-3xl font-bold tracking-tight sm:text-4xl">
               Yönetici hesabınızı oluşturun

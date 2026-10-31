@@ -5,69 +5,70 @@
 
 // Yazarlık sitesi · Yazar & kitap verileri — tüm sayfalar buradan beslenir
 export const AGENCY = {
-  name: "Mehmet Karakuş",
-  tagline: "Yazar · Fikir İşçisi",
-  email: "merhaba@mehmetkarakus.com",
-  phone: "+90 532 000 00 00",
-  address: "Kadıköy, İstanbul",
+  name: "Helal Site",
+  tagline: "Müslümanlar için helal web sitesi kurucu",
+  email: "merhaba@helalsite.com",
+  phone: "+90 555 000 00 00",
+  address: "İstanbul, Türkiye",
 };
 export const STATS = [
-  { n: "12", l: "Yayınlanmış Kitap" },
-  { n: "3", l: "Ödül" },
-  { n: "24", l: "Dilde Çeviri" },
-  { n: "18", l: "Yıllık Yazı Emekçiliği" },
+  { n: "120+", l: "Kurulan Site" },
+  { n: "9", l: "Helal Şablon" },
+  { n: "%100", l: "Reklamsız" },
+  { n: "7/24", l: "Destek" },
 ];
 
+// Görseller yerel (public/uploads) — dış servis gecikmesi/engeli olmadan anında yüklenir.
 export const CASES = [
   {
-    brand: "Sessizliğin Alfabesi",
-    title: "Sustuğumuz her an kendimize söylediğimiz en uzun cümle",
-    tag: "Deneme",
-    img: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=1200&q=80",
+    brand: "Mescid-i Nur Camii",
+    title: "Namaz vakitleri, duyurular ve vaaz arşivi tek sayfada",
+    tag: "Cami",
+    img: "/uploads/cmv86fsr20000wl0kifo8sigo.jpg",
   },
   {
-    brand: "Sokağın Hafızası",
-    title: "Bir şehri terk edenlerin ardında bıraktığı izler",
-    tag: "Roman",
-    img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&q=80",
+    brand: "Ehl-i Sünnet Dergisi",
+    title: "Makale arşivi, sayı galerisi ve abonelik sayfası",
+    tag: "Yayın",
+    img: "/uploads/cmv86umpb0000pdfxwe9dkrph.jpg",
   },
   {
-    brand: "Kuşlar ve Kırık Saat",
-    title: "Zamanın avuçlarımızdan nasıl kaydığına dair öyküler",
-    tag: "Öykü",
-    img: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=1200&q=80",
+    brand: "Darul Kurra Medresesi",
+    title: "Hafızlık sınıfları, ders programı ve kayıt formu",
+    tag: "Medrese",
+    img: "/alarengin.webp",
   },
   {
-    brand: "Babanın Defteri",
-    title: "Hafıza, yokluk ve hatırlama üzerine mektuplar",
-    tag: "Mektup",
-    img: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80",
+    brand: "Gençlik Meclisi",
+    title: "Gençler için haftalık program ve ilim halkaları",
+    tag: "Gençlik",
+    img: "/uploads/cmv86kvth0000fxs8y0kao9ri.webp",
   },
 ];
 
 export const SERVICES = [
-  { n: "01", t: "Roman", d: "Uzun soluklu anlatılar; insanın iç dünyasını ve dünyayla kurduğu bağı romanın imkânlarıyla yeniden kurmak." },
-  { n: "02", t: "Öykü", d: "Kısa ama iz bırakan anlatılar; bir tek anın içine bir ömrü sığdırmak." },
-  { n: "03", t: "Deneme", d: "Gündelik olanın içinden çıkıp meselelere kendi sesiyle bakan, düşünmenin peşine düşen yazılar." },
-  { n: "04", t: "Mektup & Günlük", d: "Birisini kendine çevirerek yazılan; yokluk, bekleyiş ve hafıza üzerine samimi metinler." },
-  { n: "05", t: "Edebiyat Eleştirisi", d: "Kitapların arasında yürüyen, okuma ufkunu genişleten kritikler ve incelemeler." },
-  { n: "06", t: "Yazarlık Atölyesi", d: "Yazmaya yeni başlayanlarla birlikte metni kurmanın, sezmeyi öğrenmenin atölyesi." },
+  { n: "01", t: "Cami Şablonu", d: "Namaz vakitleri, kandil ve cuma duyuruları, vaaz arşivi. Cemaat için sade ve hızlı bir sayfa." },
+  { n: "02", t: "Cemaat & Dernek", d: "Faaliyet duyuruları, haftalık program, üye kaydı ve haber arşivi; sade ve hızlı bir düzen." },
+  { n: "03", t: "Medrese & Kur", d: "Hafızlık ve ilim sınıfları, ders programı, öğretmen kadrosu ve ön kayıt formu." },
+  { n: "04", t: "İslami Eğitim", d: "Ders notları, tefsir ve hadis arşivi, haftalık sohbet kayıtları tek bir düzen içinde." },
+  { n: "05", t: "Helal Yaşam", d: "Aile, çevre ve günlük hayat üzerine bilgi; satış, reklam ve ticari bağlantı bulunmaz." },
+  { n: "06", t: "Yayın & Duyuru", d: "Kitap, risale ve bülten yayını; helal içerik denetiminden geçmiş metinlerle." },
 ];
 
 export const NEWS = [
-  { cat: "Yeni Kitap", date: "Eylül 2026", title: "Yeni deneme kitabı 'Eşiğin Öte Yanı' raflarda", href: "#" },
-  { cat: "Söyleşi", date: "Ağustos 2026", title: "Hafıza ve yazmak üzerine söyleşi yayınlandı", href: "#" },
-  { cat: "Ödül", date: "Temmuz 2026", title: "Hikâye Ödülleri'nde jüri seçkisinde", href: "#" },
-  { cat: "Atölye", date: "Haziran 2026", title: "Güz dönemi yazarlık atölyesi kayıtları açıldı", href: "#" },
+  { cat: "Yeni Şablon", date: "Eylül 2026", title: "Hafızlık medreseleri için yeni şablon yayında", href: "#" },
+  { cat: "Güncelleme", date: "Ağustos 2026", title: "Namaz vakitleri artık tek tıkla güncelleniyor", href: "#" },
+  { cat: "Helal Denetim", date: "Temmuz 2026", title: "İçerik kuralları ve reklam denetimi genişletildi", href: "#" },
+  { cat: "Eğitim", date: "Haziran 2026", title: "Panel kullanımı için ücretsiz canlı ders takvimi", href: "#" },
 ];
 
-export const CLIENTS = ["EDEBİYAT DERGİSİ", "KİTAP FUARI", "YAYINEVİ SOHBETLERİ", "KÜTÜPHANE GÜNLERİ", "YAZAR DERNEĞİ", "ATÖLYE"];
+export const CLIENTS = ["CAMİ DERNEĞİ", "KURAN KURSU", "İLİM DERNEGİ", "YAYIN EVİ", "GENÇLİK MECLİSİ", "HAC VE UMRE REHBERİ"];
 
 export const NAV_LINKS = [
   { href: "/malper", label: "Ana Sayfa" },
-  { href: "/malper/hakkinda", label: "Yazar" },
-  { href: "/malper/hizmetler", label: "Kitaplar" },
+  { href: "/malper/hakkinda", label: "Hakkında" },
+  { href: "/malper/hizmetler", label: "Hizmetler" },
   { href: "/malper/isler", label: "Yazılar" },
-  { href: "/malper/kariyer", label: "Atölye" },
+  { href: "/malper/kariyer", label: "Eğitim" },
   { href: "/malper/iletisim", label: "İletişim" },
 ];

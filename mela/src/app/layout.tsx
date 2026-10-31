@@ -28,11 +28,11 @@ const geistMono = localFont({
 });
 export const metadata: Metadata = {
   title: {
-    template: "%s | Yazar Mehmet Karakuş",
-    default: "Yazar Mehmet Karakuş",
+    template: "%s | Emanet",
+    default: "Emanet",
   },
-  description: "Yazar Mehmet Karakuş · İşler · Hizmetler · Kültür",
-  keywords: ["Yazar Mehmet Karakuş", "Strateji", "Tasarım", "Prodüksiyon", "Medya"],
+  description: "Sade, reklamsız ve ticari olmayan bilgi sitesi.",
+  keywords: ["emanet"],
 };
 
 export default async function RootLayout({
@@ -63,7 +63,6 @@ export default async function RootLayout({
           </ThemeProvider>
         </ReactQueryProvider>
         <Toaster />
-        <Footer />
         </SessionProvider>
       </body>
     </html>

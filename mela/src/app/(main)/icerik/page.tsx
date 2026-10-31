@@ -6,6 +6,7 @@
 import { getSiteConfig, getSiteContent } from "@/lib/site-content";
 import SiteContentEditor from "./SiteContentEditor";
 import SiteSettingsEditor from "./SiteSettingsEditor";
+import PanelSettingsEditor from "./PanelSettingsEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,10 @@ export default async function IcerikPage() {
         </p>
       </div>
       <div className="px-4 sm:px-6 lg:px-8">
-        <SiteSettingsEditor initialConfig={config} />
+        <SiteSettingsEditor initialConfig={config} zikirler={config.zikirler} />
+      </div>
+      <div className="px-4 sm:px-6 lg:px-8">
+        <PanelSettingsEditor initialSocial={config.social} initialPages={config.pages} />
       </div>
       <SiteContentEditor initialContent={content} />
     </div>

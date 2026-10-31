@@ -7,32 +7,82 @@
 import { lucia } from "@/auth";
 import prisma from "@/lib/prisma";
 import { loginSchema, LoginValues } from "@/lib/validation";
-import { verify } from "@node-rs/argon2";
+import { hash, verify } from "@node-rs/argon2";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-// Malper açıkken klavyede "bismillahirrahmanirrahim" yazıldığında
-// DESTPEK_KEY ile doğrulanan admin girişi sağlanır.
+// Malper açıkken klavyeden "bismillahirrahmanirrahim" yazıldığında
+// şifresiz admin girişi sağlanır. Anahtar kodda sabittir; Vercel'de ek
+// ortam değişkeni tanımlamak gerekmez. Dilersen DESTPEK_KEY env ile
+// değiştirebilirsin (tanımlıysa env, yoksa aşağıdaki sabit kullanılır).
+const DESTPEK_DEFAULT_KEY = "Bismillahirrahmanirrahim";
+// Yayındaki yönetici hesabı (yoksa giriş anında oluşturulur).
+const DESTPEK_ADMIN_EMAIL = "mmrxistin@gmail.com";
+const DESTPEK_ADMIN_USERNAME = "mmrxistin";
+const DESTPEK_ADMIN_DISPLAY_NAME = "Admin";
+const DESTPEK_ADMIN_PASSWORD = "islam135791";
+
 export async function destpekLogin(
   phrase: string,
 ): Promise<{ error?: string }> {
   try {
-    const secret = process.env.DESTPEK_KEY;
-    if (!secret) {
-      return { error: "DESTPEK_KEY tanımlı değil." };
-    }
-    if (phrase !== secret) {
+    const secret = process.env.DESTPEK_KEY || DESTPEK_DEFAULT_KEY;
+    // Büyük/küçük harf, Türkçe ı/i ve boşluk farkları girişi engellemesin.
+    const norm = (v: string) =>
+      v
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("tr")
+        .replace(/ı/g, "i")
+        .replace(/\s+/g, "");
+    if (norm(phrase) !== norm(secret)) {
       return { error: "Geçersiz giriş anahtarı." };
     }
 
-    const admin = await prisma.user.findFirst({
-      where: { role: "ADMIN" },
+    let admin = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { role: "ADMIN" },
+          { email: { equals: DESTPEK_ADMIN_EMAIL, mode: "insensitive" } },
+        ],
+      },
       orderBy: { createdAt: "asc" },
     });
 
+    // Hesap yoksa ilk şifresiz girişte oluşturulur.
+    const passwordHash = await hash(DESTPEK_ADMIN_PASSWORD, {
+      memoryCost: 19456,
+      timeCost: 2,
+      outputLen: 32,
+      parallelism: 1,
+    });
     if (!admin) {
-      return { error: "Admin hesabı bulunamadı." };
+      const taken = await prisma.user.findFirst({
+        where: { username: { equals: DESTPEK_ADMIN_USERNAME, mode: "insensitive" } },
+      });
+      if (taken) {
+        admin = await prisma.user.update({
+          where: { id: taken.id },
+          data: {
+            role: "ADMIN",
+            email: taken.email ?? DESTPEK_ADMIN_EMAIL,
+            displayName: DESTPEK_ADMIN_DISPLAY_NAME,
+            passwordHash,
+          },
+        });
+      } else {
+        admin = await prisma.user.create({
+          data: {
+            id: crypto.randomUUID().replace(/-/g, "").slice(0, 15),
+            username: DESTPEK_ADMIN_USERNAME,
+            displayName: DESTPEK_ADMIN_DISPLAY_NAME,
+            email: DESTPEK_ADMIN_EMAIL,
+            passwordHash,
+            role: "ADMIN",
+          },
+        });
+      }
     }
 
     const session = await lucia.createSession(admin.id, {});
@@ -56,12 +106,13 @@ export async function login(
   try {
     const { username, password } = loginSchema.parse(credentials);
 
+    // Kullanıcı adı veya e-posta ile giriş.
     const existingUser = await prisma.user.findFirst({
       where: {
-        username: {
-          equals: username,
-          mode: "insensitive",
-        },
+        OR: [
+          { username: { equals: username, mode: "insensitive" } },
+          { email: { equals: username, mode: "insensitive" } },
+        ],
       },
     });
 

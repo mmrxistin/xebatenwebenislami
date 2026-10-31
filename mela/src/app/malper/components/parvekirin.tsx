@@ -13,7 +13,14 @@ import { CarPage } from "@/lib/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
-export default function ParvekirinaYek() {
+interface NewsItem {
+  cat: string;
+  date: string;
+  title: string;
+  href?: string;
+}
+
+export default function ParvekirinaYek({ fallback = [] }: { fallback?: NewsItem[] }) {
   const {
     data,
     fetchNextPage,
@@ -41,20 +48,53 @@ export default function ParvekirinaYek() {
       return [];
     }) || [];
 
+  const fallbackList = (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {fallback.map((n, i) => (
+        <a
+          key={`${n.title}-${i}`}
+          href={n.href || "#"}
+          className="group flex flex-col justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6 no-underline transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <span
+              className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white"
+              style={{ backgroundColor: "var(--site-accent)" }}
+            >
+              {n.cat}
+            </span>
+            <span className="text-xs font-mono text-zinc-500">{n.date}</span>
+          </div>
+          <p className="text-lg font-bold leading-snug text-zinc-100 group-hover:text-white">
+            {n.title}
+          </p>
+        </a>
+      ))}
+    </div>
+  );
+
   if (status === "pending") {
-    return <PostsLoadingSkeleton />;
+    return fallback.length ? fallbackList : <PostsLoadingSkeleton />;
   }
 
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
-      <p className="text-center text-muted-foreground">
-        Henüz içerik paylaşılmadı.
-      </p>
+      fallback.length ? (
+        fallbackList
+      ) : (
+        <p className="text-center text-muted-foreground">
+          Henüz içerik paylaşılmadı.
+        </p>
+      )
     );
   }
 
   if (status === "error") {
-    return <p className="text-center text-destructive">Pirsgirek derket</p>;
+    return fallback.length ? (
+      fallbackList
+    ) : (
+      <p className="text-center text-destructive">Pirsgirek derket</p>
+    );
   }
 
   return (

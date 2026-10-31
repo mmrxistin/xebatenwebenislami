@@ -9,14 +9,15 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { updateSiteContent } from "@/lib/site-content-actions";
 import BrandLogo from "@/components/BrandLogo";
-import { HALAL_RULES, type SiteConfig } from "@/lib/site-config";
+import { HALAL_RULES, type SiteConfig, type SiteZikir } from "@/lib/site-config";
 import { Check, Loader2, Lock, Plus, Trash2 } from "lucide-react";
 
 interface Props {
   initialConfig: SiteConfig;
+  zikirler?: SiteZikir[];
 }
 
-type SaveKey = "general" | "sections" | "theme" | "navigation";
+type SaveKey = "general" | "sections" | "theme" | "navigation" | "zikirler";
 
 const GENERAL_FIELDS: { key: keyof SiteConfig["general"]; label: string; textarea?: boolean }[] = [
   { key: "siteName", label: "Site Adı" },
@@ -43,10 +44,11 @@ const THEME_FIELDS: { key: keyof SiteConfig["theme"]; label: string }[] = [
   { key: "foreground", label: "Yazı Rengi" },
 ];
 
-export default function SiteSettingsEditor({ initialConfig }: Props) {
+export default function SiteSettingsEditor({ initialConfig, zikirler: initialZikirler = [] }: Props) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [config, setConfig] = useState<SiteConfig>(initialConfig);
+  const [zikirler, setZikirler] = useState<SiteZikir[]>(initialZikirler);
   const [saved, setSaved] = useState<Set<SaveKey>>(new Set());
 
   function patch<K extends SaveKey>(key: K, value: SiteConfig[K]) {
@@ -57,7 +59,7 @@ export default function SiteSettingsEditor({ initialConfig }: Props) {
   function save(key: SaveKey) {
     startTransition(async () => {
       try {
-        await updateSiteContent(key, config[key]);
+        await updateSiteContent(key, key === "zikirler" ? zikirler : config[key]);
         setSaved((prev) => new Set([...prev, key]));
         toast({ description: "Kaydedildi" });
       } catch {
@@ -253,6 +255,54 @@ export default function SiteSettingsEditor({ initialConfig }: Props) {
           ))}
         </div>
         <SaveButton k="sections" />
+      </div>
+
+      {/* ZİKİRLER */}
+      <div className={card}>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold">Zikirler</h2>
+            <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+              Panelde ve sitede gösterilecek zikirler. Yalnızca zikir eklenebilir.
+            </p>
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => {
+              setZikirler((prev) => [...prev, { text: "" }]);
+              setSaved((prev) => new Set([...prev].filter((k) => k !== "zikirler")));
+            }}
+          >
+            <Plus className="mr-1 h-4 w-4" /> Ekle
+          </Button>
+        </div>
+        <div className="mt-4 space-y-3">
+          {zikirler.map((z, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <Input
+                value={z.text}
+                placeholder="Zikir metni"
+                onChange={(e) => {
+                  setZikirler((prev) => prev.map((n, j) => (j === i ? { text: e.target.value } : n)));
+                  setSaved((prev) => new Set([...prev].filter((k) => k !== "zikirler")));
+                }}
+              />
+              <Button
+                size="icon"
+                variant="ghost"
+                className="text-red-600"
+                onClick={() => {
+                  setZikirler((prev) => prev.filter((_, j) => j !== i));
+                  setSaved((prev) => new Set([...prev].filter((k) => k !== "zikirler")));
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <SaveButton k="zikirler" />
       </div>
 
       {/* HELAL KURALLAR */}

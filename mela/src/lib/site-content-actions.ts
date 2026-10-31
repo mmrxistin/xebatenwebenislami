@@ -5,7 +5,7 @@
 
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { SITE_CONFIG_KEYS } from "@/lib/site-config";
+import { SITE_CONFIG_KEYS, diniSomuruTespit, ticariIcerikTespit } from "@/lib/site-config";
 
 export async function updateSiteContent(key: string, data: unknown) {
   const { user } = await validateRequest();
@@ -20,6 +20,15 @@ export async function updateSiteContent(key: string, data: unknown) {
     ...SITE_CONFIG_KEYS,
   ];
   if (!allowed.includes(key)) throw new Error("Invalid key");
+
+  // Dini sömürü denetimi: bağış/vakıf toplama çağrısı içeren içerik kaydedilemez.
+  const metin = JSON.stringify(data ?? "");
+  const bulgular = [...diniSomuruTespit(metin), ...ticariIcerikTespit(metin)];
+  if (bulgular.length) {
+    throw new Error(
+      `Yasak içerik: dini sömürü, bağış/vakıf toplama, para transferi ve ticari içerik yapılamaz. Tespit: ${[...new Set(bulgular)].join(", ")}.`,
+    );
+  }
 
 
   let payload = data as Record<string, unknown>;

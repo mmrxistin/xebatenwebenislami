@@ -17,31 +17,29 @@ export default function IletisimPage() {
   };
 
   const inputCls =
-    "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white outline-none transition-colors placeholder:text-zinc-600 focus:border-[#ff4d00]";
+    "w-full rounded-md border border-white/15 bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-zinc-600 focus:border-white/35";
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
+    <main className="min-h-screen text-zinc-100">
       {/* HERO */}
-      <section className="border-b border-white/10 px-4 pb-20 pt-16 sm:px-6 lg:px-10">
-        <div className="mx-auto max-w-[1600px]">
-          <p className="mb-3 text-xs font-black uppercase tracking-[0.3em] text-[#ff4d00]">Yazışalım</p>
-          <h1 className="text-6xl font-black uppercase tracking-tighter sm:text-8xl">İletişim</h1>
-          <p className="mt-6 max-w-xl text-lg text-zinc-400">
-            Kitap, söyleşi, atölye ya da sadece bir merhaba — bir fincan kahve kadar yakınım. Formu doldurun, en kısa sürede dönerim.
+      <section className="border-b border-white/10 px-4 pb-12 pt-12 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-2xl font-semibold sm:text-3xl">İletişim</h1>
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-400">
+            Formu doldurun, size dönüş yapılacaktır.
           </p>
         </div>
       </section>
 
-      <section className="px-4 py-20 sm:px-6 lg:px-10">
-        <div className="mx-auto grid max-w-[1600px] gap-16 lg:grid-cols-2">
+      <section className="px-4 py-12 sm:px-6 lg:px-10">
+        <div className="mx-auto grid max-w-3xl gap-16 lg:grid-cols-2">
           {/* FORM */}
           <div>
             {sent ? (
-              <div className="rounded-3xl border border-[#ff4d00]/40 bg-[#ff4d00]/10 p-12 text-center">
-                <div className="text-5xl">🎉</div>
-                <h2 className="mt-6 text-2xl font-black">Mektubunuz ulaştı!</h2>
-                <p className="mt-3 text-zinc-300">
-                  El Hamdu Lillah — en kısa sürede size dönüş yapacağım.
+              <div className="rounded-md border border-white/15 p-8">
+                <h2 className="text-base font-medium">Mesajınız alındı.</h2>
+                <p className="mt-2 text-sm text-zinc-400">
+                  En kısa sürede size dönüş yapılacaktır.
                 </p>
               </div>
             ) : (
@@ -69,23 +67,23 @@ export default function IletisimPage() {
                   onChange={(e) => setForm({ ...form, budget: e.target.value })}
                 >
                   <option value="" className="bg-zinc-950">Bir konu seçin</option>
-                  <option value="s" className="bg-zinc-950">Kitap & Söyleşi</option>
-                  <option value="m" className="bg-zinc-950">Atölye & Danışmanlık</option>
-                  <option value="l" className="bg-zinc-950">Diğer</option>
+                  <option value="genel" className="bg-zinc-950">Genel</option>
+                  <option value="icerik" className="bg-zinc-950">İçerik</option>
+                  <option value="diger" className="bg-zinc-950">Diğer</option>
                 </select>
                 <textarea
                   required
                   rows={6}
-                  placeholder="Bana bir şeyler yazın..."
+                  placeholder="Mesajınız"
                   className={inputCls}
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                 />
                 <button
                   type="submit"
-                  className="mt-2 rounded-full bg-[#ff4d00] px-10 py-4 text-xs font-black uppercase tracking-[0.16em] text-white transition-all hover:bg-white hover:text-zinc-950"
+                  className="mt-2 rounded-md border border-white/15 px-6 py-3 text-sm transition-colors hover:border-white/35"
                 >
-Mektubu gönder →
+                  Gönder
                 </button>
               </form>
             )}
@@ -94,35 +92,24 @@ Mektubu gönder →
           {/* BİLGİLER */}
           <div className="flex flex-col gap-10">
             <div>
-              <h3 className="mb-4 text-xs font-black uppercase tracking-[0.25em] text-zinc-500">E-posta</h3>
+              <h3 className="mb-4 text-xs uppercase tracking-[0.2em] text-zinc-500">E-posta</h3>
               <a
                 href={`mailto:${AGENCY.email}`}
-                className="text-2xl font-black text-white no-underline transition-colors hover:text-[#ff4d00] sm:text-3xl"
+                className="text-base no-underline transition-colors hover:text-white"
               >
                 {AGENCY.email}
               </a>
             </div>
             <div>
-              <h3 className="mb-4 text-xs font-black uppercase tracking-[0.25em] text-zinc-500">Telefon</h3>
-              <p className="text-2xl font-black sm:text-3xl">{AGENCY.phone}</p>
+              <h3 className="mb-4 text-xs uppercase tracking-[0.2em] text-zinc-500">Telefon</h3>
+              <p className="text-base text-zinc-300">{AGENCY.phone}</p>
             </div>
             <div>
-              <h3 className="mb-4 text-xs font-black uppercase tracking-[0.25em] text-zinc-500">Adres</h3>
-              <p className="text-xl font-bold text-zinc-300">{AGENCY.address}</p>
+              <h3 className="mb-4 text-xs uppercase tracking-[0.2em] text-zinc-500">Adres</h3>
+              <p className="text-base text-zinc-300">{AGENCY.address}</p>
             </div>
             <div>
-              <h3 className="mb-4 text-xs font-black uppercase tracking-[0.25em] text-zinc-500">Sosyal</h3>
-              <div className="flex gap-3">
-                {["Instagram", "X", "Goodreads", "YouTube"].map((s) => (
-                  <a
-                    key={s}
-                    href="#"
-                    className="rounded-full border border-white/20 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-zinc-300 no-underline transition-all hover:border-[#ff4d00] hover:text-[#ff4d00]"
-                  >
-                    {s}
-                  </a>
-                ))}
-              </div>
+
             </div>
           </div>
         </div>

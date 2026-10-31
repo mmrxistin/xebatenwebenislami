@@ -27,7 +27,8 @@ export default async function Layout({
 }) {
   const session = await validateRequest();
 
-  if (!session.user) redirect("/malper");
+  // Şifresiz giriş yalnızca ADMIN hesabı açar; diğer oturumlar panele giremez.
+  if (!session.user || session.user.role !== "ADMIN") redirect("/malper");
 
   return (
     <SessionProvider value={session}>
