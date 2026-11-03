@@ -2,10 +2,6 @@
 // El Hamdu Lillahi Rabbul Alemin
 // Esselatu vesselamu ala rasulina Muhammedin .
 // La ilahe ill Allah Muhammeden Rasulullah
-
-// Bismillahirrahmanirrahim
-// Elhamdulillahirabbulalemin
-// Esselatu vesselamu ala rasulina Muhammedin
 // Suphanallah, Elhamdulillah, Allahu Ekber
 // Allah U Ekber, Allah U Ekber, Allah U Ekber, La ilahe illAllah
 // Allah u Ekber Ve Lillahil Hamd
@@ -64,7 +60,7 @@ export default async function MenuBar({ className }: MenuBarProps) {
           </div>
         </div>
         <p className="mt-4 text-xs uppercase tracking-[0.2em] text-red-200">
-          Yazar Mehmet Karakuş · Yönetim
+          Emanet · Yönetim
         </p>
       </div>
 

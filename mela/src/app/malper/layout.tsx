@@ -1,7 +1,7 @@
  // BismillahirRahmanirRahim
 // El Hamdu Lillahi Rabbul Alemin
 // Esselatu vesselamu ala rasulina Muhammedin .
-// La ilahe illAllahu vahdehu la sharika leh, lehu'l-mulku ve lehu'l-hamdu,
+// La ilahe illAllahu vahdehu la sharika leh, lehu'l-mulku ve lehu'l-hamdu.
 // yuhyi ve yumit
 // ve Huwe Hayyûn La yemût
 // bîyadîhîl xayr
