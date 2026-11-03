@@ -43,7 +43,7 @@ export default function Navbar() {
       >
         <div className="flex items-center gap-3">
           <Link href="/" className="text-2xl font-bold text-primary">
-            Yazar Mehmet Karakuş · Yönetim
+            Emanet · Yönetim
           </Link>
         </div>
 
