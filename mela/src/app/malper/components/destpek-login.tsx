@@ -18,12 +18,38 @@ const norm = (v: string) =>
     .replace(/[^a-z]/g, "");
 
 // Malper açıkken klavyede "BismillahirRahmanirRahim" yazıldığında şifresiz admin girişi.
+// Sayfa ilk açılırken (hidrasyondan önce) yazılan tuşların kaçmaması için bir "ön dinleyici"
+// kurulur; gelen tuşlar kuyrukta tutulur ve bileşen hazır olunca devralınır.
+const EARLY_FLAG = "__destpekEarly";
+const early: { buf: string } = { buf: "" };
+
+function installEarlyCatcher() {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as Record<string, unknown>;
+  if (w[EARLY_FLAG]) return;
+  w[EARLY_FLAG] = true;
+  window.addEventListener(
+    "keydown",
+    (e: KeyboardEvent) => {
+      if (e.key.length !== 1 || !/[a-zA-ZçğıöşüÇĞİÖŞÜ ]/.test(e.key)) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      early.buf = (early.buf + e.key).slice(-40);
+    },
+    true,
+  );
+}
+
+installEarlyCatcher();
+
 export default function DestpekLoginListener() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    let raw = "";
+    // Erken yakalanan tuşları devral.
+    let raw = early.buf;
+    early.buf = "";
 
     function onKeyDown(e: KeyboardEvent) {
       if (busy) return;
@@ -61,8 +87,10 @@ export default function DestpekLoginListener() {
       }
     }
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    // Yakalama aşamasında dinle: başka bir bileşen preventDefault/stopPropagation
+    // yapsa bile tuşlar bize ulaşır.
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => window.removeEventListener("keydown", onKeyDown, true);
   }, [router, busy]);
 
   return null;
