@@ -261,10 +261,10 @@ Tüm Yazılar <span className="inline-block transition-transform group-hover:tra
             seninle başlasın
           </h2>
           <a
-            href="mailto:merhaba@mehmetkarakus.com"
+            href="mailto:merhaba@Emanet.com"
             className="mt-12 inline-block rounded-full border border-white/40 px-10 py-5 text-xs font-black uppercase tracking-[0.16em] no-underline transition-all hover:bg-[#ff4d00] hover:border-[#ff4d00]"
           >
-            merhaba@mehmetkarakus.com
+            merhaba@Emanet.com
           </a>
         </div>
       </section>

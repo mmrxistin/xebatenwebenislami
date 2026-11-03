@@ -1,7 +1,7 @@
 // BismillahirRahmanirRahim
 // El Hamdu Lillahi Rabbul Alemin
 // Esselatu vesselamu ala rasulina Muhammedin
-// Yönetici hesabını oluşturur / günceller: kullanıcı adı = MehmetKarakus, şifre = mehmetkarakus
+// Yönetici hesabını oluşturur / günceller: kullanıcı adı = Emanet, şifre = Emanet
 // (Ayrıca görünen ad ve site içeriğindeki yazar adı "Yazar Mehmet Karakuş" olur.)
 // Kullanım:
 //   npm run seed:admin       (yerel: .env / .env.local okunur)
@@ -39,8 +39,8 @@ for (const file of [".env.local", ".env.production.local", ".env"]) {
   }
 }
 
-const ADMIN_USERNAME = "MehmetKarakus";
-const ADMIN_PASSWORD = "mehmetkarakus";
+const ADMIN_USERNAME = "Emanet";
+const ADMIN_PASSWORD = "Emanet";
 const AUTHOR_DISPLAY_NAME = "Yazar Mehmet Karakuş";
 const AUTHOR_TITLE = "Yazar Mehmet Karakuş";
 

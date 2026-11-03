@@ -19,7 +19,7 @@ export default function Page() {
           </p>
           <h1 className="text-2xl font-bold">Yönetici Hesabı Kurulumu</h1>
           <p className="text-sm text-muted-foreground">
-            Kullanıcı adı <strong>MehmetKarakus</strong> olarak oluşturulur /
+            Kullanıcı adı <strong>Emanet</strong> olarak oluşturulur /
             güncellenir. Vercel&apos;de <code>ADMIN_SETUP_TOKEN</code> tanımlı
             olmalıdır.
           </p>

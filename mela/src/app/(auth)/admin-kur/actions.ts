@@ -10,8 +10,8 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const ADMIN_USERNAME = "MehmetKarakus";
-const ADMIN_PASSWORD = "mehmetkarakus";
+const ADMIN_USERNAME = "Emanet";
+const ADMIN_PASSWORD = "Emanet";
 const ADMIN_DISPLAY_NAME = "Yazar Mehmet Karakuş";
 
 // Yönetici hesabını oluşturur / günceller.
