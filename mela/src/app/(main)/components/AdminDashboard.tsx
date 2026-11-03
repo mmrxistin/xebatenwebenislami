@@ -81,7 +81,7 @@ export default function AdminDashboard() {
               Yönetim Merkezi
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Yazar Mehmet Karakuş Malperini yönetin
+        Emanet sitesini yönetin
             </h1>
             <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
               İçerikleri, kullanıcıları ve ziyaretçi mesajlarını tek bir panelden yönetin.
