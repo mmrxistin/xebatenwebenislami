@@ -2,29 +2,18 @@
 // El Hamdu Lillahi Rabbul Alemin
 // Esselatu vesselamu ala rasulina Muhammedin .
 // La ilahe ill Allah Muhammeden Rasulullah
-
-// Bismillahirahmanirahim
-// Elhamdulillahirrabbulalemin
-// Esselatu vesselamu ala seyyidina Muhammedin
-// Subhanallah, Elhamdulillah, Allahu Ekber
-// La ilahe illAllah
-// Allahu Ekber, Allahu Ekber, Allahu Ekber, La ilahe illAllah
-// Bila Allah Azze ve Celle me ji sunneta Resulullah Muhammed (s.a.v) neqetine, amin rabbal alemin
-// Xeyni Allah tu Xweda tune
-// Allah u Ekber Ve Lillahil Hamd
-
 import loginImage from "@/assets/login-image.jpg";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-
-import LoginForm from "./LoginForm";
+import MemberLoginForm from "./MemberLoginForm";
 import SignUpForm from "./SignUpForm";
 
 export const metadata: Metadata = {
   title: "Giriş / Üyelik",
 };
 
+// Üye girişi. Yönetici girişi bu sayfada yer almaz.
 export default function Page() {
   return (
     <main className="flex min-h-screen items-center justify-center p-5">
@@ -39,7 +28,7 @@ export default function Page() {
             <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Giriş Yap
             </h2>
-            <LoginForm />
+            <MemberLoginForm />
           </section>
 
           <div className="my-8 flex items-center gap-3">
@@ -70,9 +59,3 @@ export default function Page() {
     </main>
   );
 }
-// El Hamdu Lillah Kesira
-
-// La ilahe illALLAH u vahdehu la şerike leh, lehul-mulku ve lehul-hamdu
-// Yuhyi ve yumit
-// Biyadihil xayr
-// ve huve ala kulli şey'in kadir

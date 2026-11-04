@@ -2,10 +2,6 @@
 // El Hamdu Lillahi Rabbul Alemin
 // Esselatu vesselamu ala rasulina Muhammedin .
 // La ilahe ill Allah Muhammeden Rasulullah
-
-// Bismillahirahmanirahim 
-
-
 "use client";
 
 import LoadingButton from "@/components/LoadingButton";
@@ -23,11 +19,10 @@ import { loginSchema, LoginValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { login } from "./actions";
+import { adminLogin } from "./actions";
 
-export default function LoginForm() {
+export default function AdminLoginForm() {
   const [error, setError] = useState<string>();
-
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<LoginValues>({
@@ -41,7 +36,7 @@ export default function LoginForm() {
   async function onSubmit(values: LoginValues) {
     setError(undefined);
     startTransition(async () => {
-      const { error } = await login(values);
+      const { error } = await adminLogin(values);
       if (error) setError(error);
     });
   }
@@ -55,9 +50,9 @@ export default function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Kullanıcı Adı</FormLabel>
+              <FormLabel>Yönetici Kullanıcı Adı</FormLabel>
               <FormControl>
-                <Input placeholder="Username" {...field} />
+                <Input placeholder="Kullanıcı adı veya e-posta" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -70,14 +65,14 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Şifre</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="Password" {...field} />
+                <PasswordInput placeholder="Şifre" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <LoadingButton loading={isPending} type="submit" className="w-full">
-          Giriş Yap
+          Yönetici Girişi
         </LoadingButton>
       </form>
     </Form>

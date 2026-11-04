@@ -12,18 +12,30 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+// Yönetici kurulum anahtarı. Vercel'de ADMIN_SETUP_TOKEN tanımlıysa o kullanılır;
+// tanımlı değilse aşağıdaki sabit anahtar geçerlidir.
+const ADMIN_SETUP_DEFAULT_KEY = "EL HAMDU LÎLLAH Î RABBUL ALEMÎN";
+
+// Büyük/küçük harf, Türkçe Î/İ/I/ı ve EFT/EF gibi yazım farkları girişi engellemesin.
+function normalizeToken(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleUpperCase("tr")
+    .replace(/Î/g, "I")
+    .replace(/İ/g, "I")
+    .replace(/[^A-Z]/g, "");
+}
+
 export async function createAdmin(
   credentials: SignUpValues,
   setupToken: string,
 ): Promise<{ error: string }> {
   try {
     // Sadece setup token'ı doğru olan istek admin oluşturabilir.
-    const token = process.env.ADMIN_SETUP_TOKEN;
-    if (!token) {
-      return { error: "ADMIN_SETUP_TOKEN .env dosyasında tanımlı değil." };
-    }
-    if (setupToken !== token) {
-      return { error: "Kurulum token'ı hatalı." };
+    const expected = process.env.ADMIN_SETUP_TOKEN || ADMIN_SETUP_DEFAULT_KEY;
+    if (!setupToken || normalizeToken(setupToken) !== normalizeToken(expected)) {
+      return { error: "Kurulum anahtarı hatalı." };
     }
 
     const { username, email, password } = signUpSchema.parse(credentials);

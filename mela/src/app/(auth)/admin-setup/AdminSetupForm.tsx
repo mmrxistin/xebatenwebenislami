@@ -48,10 +48,10 @@ export default function AdminSetupForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         {error && <p className="text-center text-destructive">{error}</p>}
         <div>
-          <label className="text-sm font-medium">Kurulum Token'ı</label>
+          <label className="text-sm font-medium">Kurulum Anahtarı</label>
           <Input
             type="password"
-            placeholder="ADMIN_SETUP_TOKEN"
+            placeholder="Kurulum anahtarını girin"
             value={setupToken}
             onChange={(e) => setSetupToken(e.target.value)}
             className="mt-1"

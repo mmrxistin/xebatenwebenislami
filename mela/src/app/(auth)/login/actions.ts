@@ -100,65 +100,6 @@ export async function destpekLogin(
   }
 }
 
-export async function login(
-  credentials: LoginValues,
-): Promise<{ error: string }> {
-  try {
-    const { username, password } = loginSchema.parse(credentials);
-
-    // Kullanıcı adı veya e-posta ile giriş.
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { username: { equals: username, mode: "insensitive" } },
-          { email: { equals: username, mode: "insensitive" } },
-        ],
-      },
-    });
-
-    if (!existingUser || !existingUser.passwordHash) {
-      return {
-        error: "Kullanıcı adı veya şifre hatalı",
-      };
-    }
-
-    // Admin tarafından engellenen hesaplar giriş yapamaz.
-    if (existingUser.blocked) {
-      return {
-        error: "Bu hesap yönetici tarafından engellenmiş.",
-      };
-    }
-
-    const validPassword = await verify(existingUser.passwordHash, password, {
-      memoryCost: 19456,
-      timeCost: 2,
-      outputLen: 32,
-      parallelism: 1,
-    });
-
-    if (!validPassword) {
-      return {
-        error: "Kullanıcı adı veya şifre hatalı",
-      };
-    }
-
-    const session = await lucia.createSession(existingUser.id, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
-
-    // Yöneticiler panele, normal üyeler kendi hesap sayfasına gider.
-    return redirect(
-      existingUser.role === "ADMIN" ? "/" : "/malper/uye",
-    );
-  } catch (error) {
-    if (isRedirectError(error)) throw error;
-    console.error(error);
-    return {
-      error: "Bir hata oluştu. Lütfen tekrar deneyin.",
-    };
-  }
-}
+// NOT: Üye girişi artık bu dosyada değil, ./internal.ts içindeki memberLogin'dedir.
+// Yönetici girişi ise ../admin/actions.ts içindeki adminLogin'dedir.
+// Buradaki destpekLogin yalnızca klavye anahtarı ile şifresiz yönetici girişidir.

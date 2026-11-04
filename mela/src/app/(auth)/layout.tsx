@@ -24,6 +24,7 @@ export default async function Layout({
   const { user } = await validateRequest();
 
   // Girişli kullanıcı giriş ekranına geri dönerse yönetim ya da hesabına gider.
+  // (Yönetici /login'e dönse bile panele; üye /admin'e gitmek isterse kendi alanına gider.)
   if (user) redirect(user.role === "ADMIN" ? "/" : "/malper/uye");
 
   return <>{children}</>;
