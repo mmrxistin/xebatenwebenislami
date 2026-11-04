@@ -39,17 +39,7 @@ export interface SiteSections {
   contact: SiteSection;
 }
 
-// Panelde/alt bilgide gösterilen zikir — sadece zikirler kalır.
-export interface SiteZikir {
-  text: string;
-}
 
-export const DEFAULT_ZIKIRLER: SiteZikir[] = [
-  { text: "Bismillahir Rahmanir Rahim" },
-  { text: "Elhamdulillah" },
-  { text: "Allahu Ekber" },
-  { text: "SubhanAllah" },
-];
 
 export interface SiteTheme {
   accent: string;
@@ -95,7 +85,6 @@ export interface SiteConfig {
   navigation: { href: string; label: string }[];
   social: SiteSocialLink[];
   pages: SiteCustomPage[];
-  zikirler: SiteZikir[];
   ui: SiteUi;
 }
 
@@ -210,7 +199,6 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     { label: "YT", href: "#" },
   ],
   pages: [],
-  zikirler: DEFAULT_ZIKIRLER,
   ui: {
     fontFamily: "system",
     fontScale: 100,
@@ -248,7 +236,6 @@ export const SITE_CONFIG_KEYS: SiteConfigKey[] = [
   "navigation",
   "social",
   "pages",
-  "zikirler",
   "ui",
 ];
 
@@ -281,12 +268,7 @@ export function mergeSiteConfig(stored: Record<string, unknown>): SiteConfig {
       (l) => l && typeof l.href === "string" && typeof l.label === "string",
     );
   }
-  const zikirler = stored.zikirler;
-  if (Array.isArray(zikirler) && zikirler.length) {
-    out.zikirler = (zikirler as SiteZikir[]).filter(
-      (z) => z && typeof z.text === "string" && z.text.trim(),
-    );
-  }
+
   const pages = stored.pages;
   if (Array.isArray(pages)) {
     out.pages = (pages as SiteCustomPage[])

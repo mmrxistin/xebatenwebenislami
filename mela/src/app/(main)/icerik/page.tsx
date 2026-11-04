@@ -22,7 +22,7 @@ export default async function IcerikPage() {
         </p>
       </div>
       <div className="px-4 sm:px-6 lg:px-8">
-        <SiteSettingsEditor initialConfig={config} zikirler={config.zikirler} />
+        <SiteSettingsEditor initialConfig={config} />
       </div>
       <div className="px-4 sm:px-6 lg:px-8">
         <PanelSettingsEditor initialSocial={config.social} initialPages={config.pages} />
