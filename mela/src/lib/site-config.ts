@@ -148,9 +148,10 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     logoSize: 40,
   },
   sections: {
+    // Besmele siteye basılmaz; yalnızca yönetim panelinde görünür.
     hero: {
       label: "",
-      title: "Bismillahir Rahmanir Rahim",
+      title: "",
       text: "",
     },
     work: {

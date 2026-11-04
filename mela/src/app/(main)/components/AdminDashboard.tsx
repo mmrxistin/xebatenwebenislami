@@ -93,6 +93,11 @@ export default function AdminDashboard() {
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-red-600/20 blur-3xl" />
         <div className="absolute -bottom-20 left-1/3 h-40 w-40 rounded-full bg-white/5 blur-3xl" />
 
+        {/* Besmele yalnızca yönetim panelinde (giriş yapmış yöneticiye) görünür. */}
+        <p className="relative mb-6 border-b border-white/10 pb-5 text-center text-base font-semibold tracking-[0.12em] text-amber-100/90 sm:text-lg">
+          Bismillahir Rahmanir Rahim
+        </p>
+
         <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-red-100">

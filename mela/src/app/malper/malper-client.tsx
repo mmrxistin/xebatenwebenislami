@@ -34,8 +34,9 @@ export default function MalperClient({
           <div className="mb-8 flex justify-center">
             <BrandLogo size={general.logoSize * 2} title={general.siteName} />
           </div>
+          {/* Giriş başlığı panelden boş bırakılırsa site adı gösterilir. */}
           <h1 className="text-2xl font-semibold leading-relaxed sm:text-3xl" style={{ color: accent }}>
-            {S.hero.title}
+            {S.hero.title || general.siteName}
           </h1>
           {S.hero.text ? (
             <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-zinc-400">{S.hero.text}</p>
