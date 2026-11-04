@@ -11,7 +11,7 @@
 // Allah ümmetimizi korusun, birlik ve beraberliğimizi daim eylesin.
 
 
-import { useSession } from "@/app/(main)/SessionProvider";
+
 import { useToast } from "@/components/ui/use-toast";
 import { CarPage } from "@/lib/types";
 import {
@@ -25,7 +25,7 @@ import { submitPost } from "./actions";
 export function useSubmitPostMutation() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { user } = useSession();
+
   const mutation = useMutation({
     mutationFn: async (input: Parameters<typeof submitPost>[0]) => {
       const result = await submitPost(input);

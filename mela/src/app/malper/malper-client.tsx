@@ -43,15 +43,21 @@ export default function MalperClient({
           <div className="mt-10 flex flex-wrap justify-center gap-3 text-sm">
             <Link
               href="/malper/hakkinda"
-              className="rounded-md border border-white/15 px-5 py-2.5 no-underline transition-colors hover:border-white/35"
+              className="site-button px-5 py-2.5 no-underline"
             >
               Hakkında
             </Link>
             <Link
               href="/malper/iletisim"
-              className="rounded-md border border-white/15 px-5 py-2.5 no-underline transition-colors hover:border-white/35"
+              className="site-button px-5 py-2.5 no-underline"
             >
               İletişim
+            </Link>
+            <Link
+              href="/login"
+              className="px-5 py-2.5 text-white/70 no-underline transition-colors hover:text-white"
+            >
+              Giriş / Üye Ol
             </Link>
           </div>
         </div>

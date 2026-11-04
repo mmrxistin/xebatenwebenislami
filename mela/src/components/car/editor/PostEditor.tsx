@@ -33,7 +33,7 @@ import "./styles.css";
 import useMediaUpload, { Attachment } from "./useMediaUpload";
 
 export default function PostEditor() {
-  const { user } = useSession();
+  const { user } = useSession() ?? {};
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
 
@@ -98,7 +98,7 @@ export default function PostEditor() {
   return (
     <div className="flex flex-col gap-5 rounded-2xl bg-card p-3 sm:p-5 shadow-sm text-black w-full max-w-2xl mx-auto">
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-5">
-        <UserAvatar avatarUrl={user.avatarUrl} className="hidden sm:inline" />
+        <UserAvatar avatarUrl={user?.avatarUrl} className="hidden sm:inline" />
         <div className="w-full space-y-3">
           <input
             type="text"

@@ -35,6 +35,7 @@ export const lucia = new Lucia(adapter, {
       displayName: databaseUserAttributes.displayName,
       avatarUrl: databaseUserAttributes.avatarUrl,
       role: databaseUserAttributes.role,
+      blocked: databaseUserAttributes.blocked,
     };
   },
 });
@@ -52,6 +53,13 @@ interface DatabaseUserAttributes {
   displayName: string;
   avatarUrl: string | null;
   role: string | null;
+  blocked: boolean;
+}
+
+export function isAdmin(
+  user: { role?: string | null } | null | undefined,
+): boolean {
+  return user?.role === "ADMIN";
 }
 
 
@@ -70,6 +78,12 @@ export const validateRequest = cache(
     }
 
     const result = await lucia.validateSession(sessionId);
+
+    // Engellenen kullanıcının açık oturumu varsa kapatılır.
+    if (result.user && result.user.blocked) {
+      await lucia.invalidateSession(sessionId);
+      return { user: null, session: null };
+    }
 
     try {
       if (result.session && result.session.fresh) {

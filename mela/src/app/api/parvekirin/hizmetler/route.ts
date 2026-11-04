@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
     }
 
     const posts = await prisma.car.findMany({
+      where: { deletedAt: null },
       include: getCarDataInclude(user.id),
       orderBy: { createdAt: "desc" },
       take: pageSize + 1,

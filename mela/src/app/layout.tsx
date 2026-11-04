@@ -44,9 +44,7 @@ export default async function RootLayout({
   // useSession çağıran bileşenler (car/Post, PostEditor) hata vermesin.
   // Oturum yoksa null user ile sağlanır; bileşenler user ? ... : null ile güvenli kullanır.
   const session = await validateRequest();
-  const sessionValue: any = session.user
-    ? session
-    : { user: { id: "", username: "", displayName: "", avatarUrl: null, bio: null, createdAt: new Date() }, session: { id: "", userId: "", expiresAt: new Date() } };
+  const sessionValue = session.user ? session : null;
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

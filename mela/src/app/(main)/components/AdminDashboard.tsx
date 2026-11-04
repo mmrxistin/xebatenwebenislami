@@ -9,6 +9,7 @@ import {
   FileText,
   Images,
   Layout,
+  LayoutTemplate,
   MessageCircle,
   ShieldCheck,
   Users,
@@ -21,6 +22,24 @@ const dashboardCards = [
     description: "Yayınlanan sayfaları ziyaretçi deneyimiyle kontrol edin.",
     href: "/malper",
     icon: Layout,
+  },
+  {
+    title: "Kullanıcılar",
+    description: "Üyeleri görüntüleyin; rol verin, engelleyin, şifre sıfırlayın.",
+    href: "/kullanicilar",
+    icon: Users,
+  },
+  {
+    title: "Paylaşımlar",
+    description: "Tüm paylaşımları düzenleyin, gizleyin ya da kalıcı olarak silin.",
+    href: "/paylasimlar",
+    icon: MessageCircle,
+  },
+  {
+    title: "Görünüm",
+    description: "Yazı tipi, renk, buton, başlık ve alt bilgi — sitenin her yeri.",
+    href: "/gorunum",
+    icon: LayoutTemplate,
   },
   {
     title: "Anasayfa",

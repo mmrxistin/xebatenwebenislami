@@ -26,7 +26,7 @@ interface UserTooltipProps extends PropsWithChildren {
 }
 
 export default function UserTooltip({ children, user }: UserTooltipProps) {
-  const { user: loggedInUser } = useSession();
+  const loggedInUser = useSession()?.user;
 
   
 

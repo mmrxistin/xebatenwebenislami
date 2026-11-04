@@ -47,7 +47,7 @@ export default async function MenuBar({ className }: MenuBarProps) {
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg shadow-slate-900/5 ${className ?? ""}`}
+      className={`w-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 ${className ?? ""}`}
     >
       <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 p-5 text-white">
         <div className="flex items-center gap-3">
@@ -86,7 +86,7 @@ export default async function MenuBar({ className }: MenuBarProps) {
                   {messageCount}
                 </span>
               ) : item.badgeKey === "messages" ? (
-                <span className="h-2 w-2 rounded-full bg-slate-300" aria-hidden="true" />
+                <span className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-600" aria-hidden="true" />
               ) : null}
             </Link>
           ))}

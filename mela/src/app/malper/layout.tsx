@@ -13,8 +13,11 @@ import React from "react";
 import type { Metadata } from "next";
 import RedNavbar from "./components/red-nav";
 import RedFooter from "./components/red-footer";
+import AdminSiteBar from "./components/admin-site-bar";
 import DestpekLoginListener from "./components/destpek-login";
 import { getSiteConfig } from "@/lib/site-content";
+import { fontCss } from "@/lib/site-config";
+import { validateRequest } from "@/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -35,27 +38,46 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const config = await getSiteConfig();
+  const { user } = await validateRequest();
   const nav = [
     ...config.navigation,
     ...config.pages
       .filter((p) => p.published !== false)
       .map((p) => ({ href: `/malper/dinamik/${p.slug}`, label: p.title })),
   ];
+  const ui = config.ui;
+  const isAdmin = user?.role === "ADMIN";
+
+  // Görünüm ayarları CSS değişkeni olarak tüm siteye uygulanır.
+  // Görünüm ayarları CSS değişkeni olarak tüm siteye uygulanır.
+  // (px değerleri calc ile ölçeklenir; üst menü ve boşluklar bozulmaz.)
+  const style = {
+    backgroundColor: config.theme.background,
+    color: config.theme.foreground,
+    fontSize: `${ui.fontScale}%`,
+    "--site-accent": config.theme.accent,
+    "--site-button": ui.buttonColor,
+    "--site-button-text": ui.buttonTextColor,
+    "--site-radius": `${ui.radius}px`,
+    "--site-headline": `${ui.headlineSize}px`,
+    "--site-font": fontCss(ui.fontFamily),
+  } as React.CSSProperties;
+
   return (
     <div
-      className="min-h-screen antialiased"
-      style={
-        {
-          backgroundColor: config.theme.background,
-          color: config.theme.foreground,
-          "--site-accent": config.theme.accent,
-        } as React.CSSProperties
-      }
+      className="site-theme-root min-h-screen antialiased"
+      style={style}
+      data-header={ui.headerStyle}
+      data-button={ui.buttonStyle}
     >
       <DestpekLoginListener />
-      <RedNavbar config={{ ...config, navigation: nav }} />
-      <div className="pt-20">{children}</div>
-      <RedFooter config={{ ...config, navigation: nav }} />
+      {isAdmin && <AdminSiteBar />}
+      {/* Üst menü + içerik: yönetici çubuğu hem menüyü hem sayfayı aşağı iter. */}
+      <div className={`pt-20 ${isAdmin ? "mt-10" : ""}`}>
+        <RedNavbar config={{ ...config, navigation: nav }} />
+        <div className="site-main-pad">{children}</div>
+      </div>
+      {ui.showFooter && <RedFooter config={{ ...config, navigation: nav }} />}
     </div>
   );
 }

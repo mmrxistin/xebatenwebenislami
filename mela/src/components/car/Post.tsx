@@ -28,7 +28,7 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps) {
-  const { user } = useSession();
+  const { user } = useSession() ?? {};
   // content dizisi: [başlık, konu, ...açıklama satırları]
   const [title = "", topic = "", ...bodyLines] = Array.isArray(post.content)
     ? post.content

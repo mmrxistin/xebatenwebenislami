@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
 
     const posts = await prisma.car.findMany({
       where: {
+        deletedAt: null,
         OR: [
           {
             content: {

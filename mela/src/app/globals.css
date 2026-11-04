@@ -2483,3 +2483,40 @@ main .grid > div:hover {
       }
 
     }
+
+/* ============================================
+   SİTE GÖRÜNÜMÜ — admin "Görünüm" panelinden gelen değişkenler
+   (malper/layout.tsx stilleri CSS değişkeni olarak basar)
+   ============================================ */
+.site-theme-root {
+  font-family: var(--site-font, system-ui, -apple-system, "Segoe UI", sans-serif);
+}
+
+/* Başlık ölçüsü */
+.site-theme-root h1,
+.site-theme-root h2 {
+  font-size: var(--site-headline, 30px);
+}
+
+/* Site içindeki buton ve bağlantı butonları */
+.site-theme-root .site-button {
+  border-radius: var(--site-radius, 6px) !important;
+  border: 1px solid var(--site-button, #0f7a3d);
+  color: var(--site-button, #0f7a3d);
+  background-color: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.site-theme-root[data-button="solid"] .site-button {
+  background-color: var(--site-button, #0f7a3d);
+  color: var(--site-button-text, #ffffff);
+}
+
+.site-theme-root .site-button:hover {
+  filter: brightness(1.15);
+}
+
+/* Site içerik sayfaları bu dolguyu alır; /malper ana sayfası çubuğa değmez. */
+.site-main-pad {
+  padding-top: 2rem;
+}

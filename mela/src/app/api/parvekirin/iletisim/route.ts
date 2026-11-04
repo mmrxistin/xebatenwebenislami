@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     const posts = await prisma.car.findMany({
+      where: { deletedAt: null },
       include: getCarDataInclude(user.id),
       orderBy: { createdAt: "desc" },
       take: pageSize + 1,

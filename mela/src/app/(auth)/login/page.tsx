@@ -4,9 +4,6 @@
 // La ilahe ill Allah Muhammeden Rasulullah
 
 // Bismillahirahmanirahim
-
-
-// Bismillahirahmanirahim
 // Elhamdulillahirrabbulalemin
 // Esselatu vesselamu ala seyyidina Muhammedin
 // Subhanallah, Elhamdulillah, Allahu Ekber
@@ -16,36 +13,53 @@
 // Xeyni Allah tu Xweda tune
 // Allah u Ekber Ve Lillahil Hamd
 
-
 import loginImage from "@/assets/login-image.jpg";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import LoginForm from "./LoginForm";
-import { Button } from "@/components/ui/button";
+import SignUpForm from "./SignUpForm";
 
 export const metadata: Metadata = {
-  title: "Yönetici Girişi",
+  title: "Giriş / Üyelik",
 };
 
 export default function Page() {
   return (
-    <main  className="flex h-screen items-center justify-center p-5">
-      <div className="flex h-full max-h-[40rem] w-full max-w-[64rem] overflow-hidden rounded-2xl bg-card shadow-2xl">
-        <div className="w-full space-y-10 overflow-y-auto p-10 md:w-1/2">
-          <h1 className="text-center text-3xl font-bold">Emanet — Yönetici Girişi</h1>
-          <div className="space-y-5">
+    <main className="flex min-h-screen items-center justify-center p-5">
+      <div className="flex min-h-[36rem] w-full max-w-[64rem] overflow-hidden rounded-2xl bg-card shadow-2xl">
+        <div className="w-full overflow-y-auto p-8 sm:p-10 md:w-1/2">
+          <h1 className="text-center text-2xl font-bold">Emanet</h1>
+          <p className="mt-1 text-center text-sm text-muted-foreground">
+            Giriş yapın ya da yeni üyelik oluşturun.
+          </p>
 
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-muted" />
-              <span>.....</span>
-              <div className="h-px flex-1 bg-muted" />
-            </div>
+          <section className="mt-8 space-y-4">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              Giriş Yap
+            </h2>
             <LoginForm />
+          </section>
 
-
+          <div className="my-8 flex items-center gap-3">
+            <div className="h-px flex-1 bg-muted" />
+            <span className="text-xs text-muted-foreground">veya</span>
+            <div className="h-px flex-1 bg-muted" />
           </div>
+
+          <section className="space-y-4">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              Üye Ol
+            </h2>
+            <SignUpForm />
+          </section>
+
+          <p className="mt-8 text-center text-xs text-muted-foreground">
+            <Link href="/malper" className="underline hover:text-foreground">
+              Siteye dön
+            </Link>
+          </p>
         </div>
         <Image
           src={loginImage}

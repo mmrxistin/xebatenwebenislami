@@ -54,8 +54,14 @@ export default function Navbar() {
           <Link href="/malper" className="text-sm font-medium text-secondary hover:text-primary">
             Malper Önizleme
           </Link>
-          <Link href="/users" className="text-sm font-medium text-secondary hover:text-primary">
+          <Link href="/kullanicilar" className="text-sm font-medium text-secondary hover:text-primary">
             Kullanıcılar
+          </Link>
+          <Link href="/paylasimlar" className="text-sm font-medium text-secondary hover:text-primary">
+            Paylaşımlar
+          </Link>
+          <Link href="/gorunum" className="text-sm font-medium text-secondary hover:text-primary">
+            Görünüm
           </Link>
 
           <div className="flex items-center gap-3">
@@ -74,9 +80,10 @@ export default function Navbar() {
                 Yönetim
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item as={Link} href="/users">Kullanıcılar</Dropdown.Item>
+                <Dropdown.Item as={Link} href="/kullanicilar">Kullanıcılar</Dropdown.Item>
+                <Dropdown.Item as={Link} href="/paylasimlar">Paylaşımlar</Dropdown.Item>
+                <Dropdown.Item as={Link} href="/gorunum">Görünüm</Dropdown.Item>
                 <Dropdown.Item as={Link} href="/peyam">Peyam</Dropdown.Item>
-                <Dropdown.Item as={Link} href="/naverok">İçerik İşlemleri</Dropdown.Item>
                 <Dropdown.Item as={Link} href="/malper/account">Hesap</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -127,8 +134,14 @@ export default function Navbar() {
             <Link href="/malper" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>
               Malper Önizleme
             </Link>
-            <Link href="/users" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>
+            <Link href="/kullanicilar" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>
               Kullanıcılar
+            </Link>
+            <Link href="/paylasimlar" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>
+              Paylaşımlar
+            </Link>
+            <Link href="/gorunum" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>
+              Görünüm
             </Link>
 
             <div className="border-t my-2" />
@@ -145,9 +158,10 @@ export default function Navbar() {
               <details className="group">
                 <summary className="px-3 py-2 rounded cursor-pointer hover:bg-muted">Yönetim</summary>
                 <div className="pl-4">
-                  <Link href="/users" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>Kullanıcılar</Link>
+                  <Link href="/kullanicilar" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>Kullanıcılar</Link>
+                  <Link href="/paylasimlar" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>Paylaşımlar</Link>
+                  <Link href="/gorunum" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>Görünüm</Link>
                   <Link href="/peyam" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>Peyam</Link>
-                  <Link href="/naverok" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>İçerik İşlemleri</Link>
                   <Link href="/malper/account" className="block px-3 py-2 rounded hover:bg-muted" onClick={handleLinkClick}>Hesap</Link>
                 </div>
               </details>

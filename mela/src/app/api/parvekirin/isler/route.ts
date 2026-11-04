@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
     // alanlar (like/bookmark durumu) boş döner.
     const userId = user?.id ?? "";
     const posts = await prisma.car.findMany({
+      where: { deletedAt: null },
       include: getCarDataInclude(userId),
       orderBy: { createdAt: "desc" },
       take: pageSize + 1,

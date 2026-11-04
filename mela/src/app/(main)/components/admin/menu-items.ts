@@ -8,6 +8,7 @@ import {
   Gauge,
   Images,
   Layout,
+  LayoutTemplate,
   Mail,
   MessageSquare,
   Newspaper,
@@ -25,6 +26,9 @@ export interface AdminMenuItem {
 
 export const adminMenuItems: AdminMenuItem[] = [
   { label: "Genel Bakış", href: "/", icon: Gauge },
+  { label: "Görünüm", href: "/gorunum", icon: LayoutTemplate },
+  { label: "Kullanıcılar", href: "/kullanicilar", icon: Users },
+  { label: "Paylaşımlar", href: "/paylasimlar", icon: MessageSquare },
   { label: "Anasayfa", href: "/anasayfa", icon: Layout },
   { label: "Site İçerikleri", href: "/icerik", icon: Newspaper },
   { label: "İşler", href: "/isler", icon: Images },

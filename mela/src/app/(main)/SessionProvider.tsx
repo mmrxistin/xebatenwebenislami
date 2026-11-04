@@ -7,12 +7,10 @@
 import { Session, User } from "lucia";
 import React, { createContext, useContext } from "react";
 
-interface SessionContext {
-  user: User;
-  session: Session;
-}
+// Sunucudan gelen oturum; giriş yoksa null olur.
+type SessionContext = { user: User; session: Session } | null;
 
-const SessionContext = createContext<SessionContext | null>(null);
+const SessionContext = createContext<SessionContext>(null);
 
 export default function SessionProvider({
   children,
@@ -23,10 +21,7 @@ export default function SessionProvider({
   );
 }
 
+// Oturum yoksa null döner; bileşenler `useSession()?.user` ile güvenle kullanır.
 export function useSession() {
-  const context = useContext(SessionContext);
-  if (!context) {
-    throw new Error("useSession must be used within a SessionProvider");
-  }
-  return context;
+  return useContext(SessionContext);
 }

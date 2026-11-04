@@ -33,11 +33,25 @@ interface UserButtonProps {
 }
 
 export default function UserButton({ className }: UserButtonProps) {
-  const { user } = useSession();
+  const user = useSession()?.user;
 
   const { theme, setTheme } = useTheme();
 
   const queryClient = useQueryClient();
+
+  if (!user) {
+    return (
+      <Link
+        href="/login"
+        className={cn(
+          "rounded-full border border-white/20 px-4 py-1.5 text-xs text-white/80 no-underline transition-colors hover:border-white/40 hover:text-white",
+          className,
+        )}
+      >
+        Giriş / Üye Ol
+      </Link>
+    );
+  }
 
   return (
     <DropdownMenu>
@@ -49,10 +63,10 @@ export default function UserButton({ className }: UserButtonProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Logged in as @{user.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={`/users/${user.username}`}>
+        <Link href={user.role === "ADMIN" ? "/" : "/malper/account"}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 size-4" />
-            Profila We
+            {user.role === "ADMIN" ? "Yönetim Paneli" : "Hesabım"}
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSub>

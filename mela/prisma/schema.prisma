@@ -28,6 +28,7 @@ model User {
   email        String?    @unique
   passwordHash String?
   role         String     @default("USER")
+  blocked      Boolean    @default(false)
   googleId     String?    @unique
   avatarUrl    String?
   bio          String?
@@ -140,14 +141,17 @@ model se {
   @@map("se")
 }
 
+// Site paylaşımları (Car). deletedAt dolu ise paylaşım silinmiş (yumuşak silme).
 model Car {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   content     String[]
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   attachments Media[]
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime?
 
+  @@index([deletedAt])
   @@map("Car")
 }
 

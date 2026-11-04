@@ -122,10 +122,10 @@ export async function login(
       };
     }
 
-    // Sadece ADMIN rolüne sahip hesaplar panele giriş yapabilir.
-    if (existingUser.role !== "ADMIN") {
+    // Admin tarafından engellenen hesaplar giriş yapamaz.
+    if (existingUser.blocked) {
       return {
-        error: "Bu hesap yönetici değil. Giriş sadece admin içindir.",
+        error: "Bu hesap yönetici tarafından engellenmiş.",
       };
     }
 
@@ -150,7 +150,8 @@ export async function login(
       sessionCookie.attributes,
     );
 
-    return redirect("/");
+    // Yöneticiler panele, normal üyeler kendi hesap sayfasına gider.
+    return redirect(existingUser.role === "ADMIN" ? "/" : "/malper/account");
   } catch (error) {
     if (isRedirectError(error)) throw error;
     console.error(error);

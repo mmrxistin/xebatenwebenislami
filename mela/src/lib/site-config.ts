@@ -71,6 +71,23 @@ export interface SiteCustomPage {
   published: boolean;
 }
 
+// Görünüm: font, buton, başlık ve alt bilgi tasarımı
+// (admin "Görünüm" panelinden düzenlenir).
+export interface SiteUi {
+  fontFamily: string;
+  fontScale: number; // 85 - 130 (%)
+  radius: number; // 0 - 28 px
+  headlineSize: number; // 18 - 44 px
+  buttonStyle: "solid" | "outline";
+  buttonColor: string;
+  buttonTextColor: string;
+  headerStyle: "plain" | "dark" | "light";
+  showFooter: boolean;
+  footerText: string;
+  footerLinks: { href: string; label: string }[];
+  showLoginLink: boolean;
+}
+
 export interface SiteConfig {
   general: SiteGeneral;
   sections: SiteSections;
@@ -79,6 +96,7 @@ export interface SiteConfig {
   social: SiteSocialLink[];
   pages: SiteCustomPage[];
   zikirler: SiteZikir[];
+  ui: SiteUi;
 }
 
 
@@ -193,7 +211,33 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   ],
   pages: [],
   zikirler: DEFAULT_ZIKIRLER,
+  ui: {
+    fontFamily: "system",
+    fontScale: 100,
+    radius: 24,
+    headlineSize: 30,
+    buttonStyle: "outline",
+    buttonColor: "#0f7a3d",
+    buttonTextColor: "#e9f2ee",
+    headerStyle: "dark",
+    showFooter: true,
+    footerText: "",
+    footerLinks: [],
+    showLoginLink: true,
+  },
 };
+
+// Görünüm panelinde seçilebilen yazı tipleri.
+export const FONT_CHOICES: { value: string; label: string; css: string }[] = [
+  { value: "system", label: "Sistem", css: "system-ui, -apple-system, Segoe UI, sans-serif" },
+  { value: "serif", label: "Serif", css: "Georgia, 'Times New Roman', serif" },
+  { value: "mono", label: "Mono", css: "ui-monospace, SFMono-Regular, Menlo, monospace" },
+  { value: "rounded", label: "Yuvarlak", css: "'Trebuchet MS', 'Segoe UI', sans-serif" },
+];
+
+export function fontCss(value: string): string {
+  return (FONT_CHOICES.find((f) => f.value === value) ?? FONT_CHOICES[0]).css;
+}
 
 export type SiteConfigKey = keyof SiteConfig;
 
@@ -205,6 +249,7 @@ export const SITE_CONFIG_KEYS: SiteConfigKey[] = [
   "social",
   "pages",
   "zikirler",
+  "ui",
 ];
 
 
@@ -251,6 +296,38 @@ export function mergeSiteConfig(stored: Record<string, unknown>): SiteConfig {
 
   const size = Number(out.general.logoSize);
   out.general.logoSize = Number.isFinite(size) ? Math.min(96, Math.max(24, size)) : 40;
+
+  // Görünüm ayarları: yalnızca geçerli değerler kabul edilir.
+  const ui = pick("ui");
+  const clamp = (v: unknown, min: number, max: number, fallback: number) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
+  };
+  const hex = (v: unknown, fallback: string) =>
+    typeof v === "string" && /^#[0-9a-fA-F]{6}$/.test(v) ? v : fallback;
+  if (ui && typeof ui === "object") {
+    const d = DEFAULT_SITE_CONFIG.ui;
+    out.ui = {
+      fontFamily: FONT_CHOICES.some((f) => f.value === ui.fontFamily) ? ui.fontFamily : d.fontFamily,
+      fontScale: clamp(ui.fontScale, 85, 130, d.fontScale),
+      radius: clamp(ui.radius, 0, 28, d.radius),
+      headlineSize: clamp(ui.headlineSize, 18, 44, d.headlineSize),
+      buttonStyle: ui.buttonStyle === "solid" ? "solid" : "outline",
+      buttonColor: hex(ui.buttonColor, d.buttonColor),
+      buttonTextColor: hex(ui.buttonTextColor, d.buttonTextColor),
+      headerStyle:
+        ui.headerStyle === "light" || ui.headerStyle === "plain" ? ui.headerStyle : "dark",
+      showFooter: ui.showFooter !== false,
+      footerText: typeof ui.footerText === "string" ? ui.footerText : "",
+      footerLinks: Array.isArray(ui.footerLinks)
+        ? (ui.footerLinks as { href: string; label: string }[]).filter(
+            (l) => l && typeof l.href === "string" && typeof l.label === "string",
+          )
+        : [],
+      showLoginLink: ui.showLoginLink !== false,
+    };
+  }
+
   return out as SiteConfig;
 }
 
