@@ -3,11 +3,11 @@
 // Esselatu vesselamu ala rasulina Muhammedin .
 // La ilahe ill Allah Muhammeden Rasulullah
 
-// Yazarlık sitesi · Yazar & kitap verileri — tüm sayfalar buradan beslenir
+// Site verileri — tüm sayfalar buradan beslenir
 export const AGENCY = {
-  name: "Helal Site",
-  tagline: "Müslümanlar için helal web sitesi kurucu",
-  email: "merhaba@helalsite.com",
+  name: "Emanet",
+  tagline: "Sade, reklamsız ve ticari olmayan bilgi sitesi",
+  email: "merhaba@emanet.site",
   phone: "+90 555 000 00 00",
   address: "İstanbul, Türkiye",
 };

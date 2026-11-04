@@ -63,7 +63,7 @@ export async function signUp(
       sessionCookie.attributes,
     );
 
-    return redirect("/malper/account");
+    return redirect("/malper/uye");
   } catch (error) {
     if (isRedirectError(error)) throw error;
     if (error instanceof Error && /Unique constraint/i.test(error.message)) {

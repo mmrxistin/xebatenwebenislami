@@ -15,7 +15,7 @@ export default function Page() {
       <div className="w-full max-w-md space-y-8 rounded-2xl bg-card p-10 shadow-2xl">
         <div className="space-y-2 text-center">
           <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-red-100">
-            Yazar Mehmet Karakuş
+            Emanet
           </p>
           <h1 className="text-2xl font-bold">Yönetici Hesabı Kurulumu</h1>
           <p className="text-sm text-muted-foreground">

@@ -151,7 +151,9 @@ export async function login(
     );
 
     // Yöneticiler panele, normal üyeler kendi hesap sayfasına gider.
-    return redirect(existingUser.role === "ADMIN" ? "/" : "/malper/account");
+    return redirect(
+      existingUser.role === "ADMIN" ? "/" : "/malper/uye",
+    );
   } catch (error) {
     if (isRedirectError(error)) throw error;
     console.error(error);

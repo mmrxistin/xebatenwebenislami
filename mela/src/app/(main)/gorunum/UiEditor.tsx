@@ -22,11 +22,17 @@ import {
   type SiteUi,
 } from "@/lib/site-config";
 
+interface LinkItem {
+  href: string;
+  label: string;
+}
+
 interface Props {
   initialUi: SiteUi;
   initialTheme: SiteTheme;
   initialGeneral: SiteConfig["general"];
   initialSections: SiteSections;
+  initialExtraLinks?: LinkItem[];
 }
 
 const card = "rounded-3xl border border-slate-200 bg-card p-6 shadow-sm dark:border-slate-800";
@@ -37,6 +43,7 @@ export default function UiEditor({
   initialTheme,
   initialGeneral,
   initialSections,
+  initialExtraLinks = [],
 }: Props) {
   const router = useRouter();
   const { toast } = useToast();
@@ -46,6 +53,8 @@ export default function UiEditor({
   const [theme, setTheme] = useState<SiteTheme>(initialTheme);
   const [general, setGeneral] = useState(initialGeneral);
   const [sections, setSections] = useState(initialSections);
+  // Site menüsüne (tüm sayfalarda) eklenecek bağlantılar.
+  const [extraLinks, setExtraLinks] = useState<LinkItem[]>(initialExtraLinks);
 
   function saveUi() {
     startTransition(async () => {
@@ -66,6 +75,21 @@ export default function UiEditor({
         await updateSiteContent("general", general);
         await updateSiteContent("sections", sections);
         toast({ description: "Tema ve metinler kaydedildi." });
+        router.refresh();
+      } catch {
+        toast({ variant: "destructive", description: "Kaydedilemedi. Admin yetkisi gerekiyor." });
+      }
+    });
+  }
+
+  function saveExtraLinks() {
+    startTransition(async () => {
+      try {
+        await updateSiteContent(
+          "extraLinks",
+          extraLinks.filter((l) => l.href.trim() && l.label.trim()),
+        );
+        toast({ description: "Bağlantılar kaydedildi." });
         router.refresh();
       } catch {
         toast({ variant: "destructive", description: "Kaydedilemedi. Admin yetkisi gerekiyor." });
@@ -321,6 +345,67 @@ export default function UiEditor({
               placeholder={general.description}
               onChange={(e) => patchUi("footerText", e.target.value)}
             />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-semibold">Ek Menü Bağlantıları</h3>
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                Bu bağlantılar tüm malper sayfalarının menüsüne eklenir.
+              </p>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setExtraLinks((prev) => [...prev, { label: "", href: "/malper/" }])}
+            >
+              <Plus className="mr-1 h-4 w-4" /> Ekle
+            </Button>
+          </div>
+          <div className="mt-3 space-y-3">
+            {extraLinks.length === 0 && (
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Henüz ek bağlantı yok. Menü yalnızca yukarıdaki ayarlardan besleniyor.
+              </p>
+            )}
+            {extraLinks.map((l, i) => (
+              <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <Input
+                  placeholder="Etiket"
+                  value={l.label}
+                  onChange={(e) =>
+                    setExtraLinks((prev) =>
+                      prev.map((n, j) => (j === i ? { ...n, label: e.target.value } : n)),
+                    )
+                  }
+                />
+                <Input
+                  placeholder="/malper/..."
+                  value={l.href}
+                  onChange={(e) =>
+                    setExtraLinks((prev) =>
+                      prev.map((n, j) => (j === i ? { ...n, href: e.target.value } : n)),
+                    )
+                  }
+                />
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-red-600"
+                  onClick={() => setExtraLinks((prev) => prev.filter((_, j) => j !== i))}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex justify-end">
+            <Button onClick={saveExtraLinks} disabled={isPending}>
+              {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}
+              Bağlantıları Kaydet
+            </Button>
           </div>
         </div>
 

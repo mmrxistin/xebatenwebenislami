@@ -8,7 +8,7 @@ import { LOCKED_LOGO } from "@/lib/site-config";
 export default function BrandLogo({
   size = 40,
   className = "",
-  title = "Helal Site",
+  title = "Emanet",
 }: {
   size?: number;
   className?: string;
@@ -17,7 +17,7 @@ export default function BrandLogo({
   return (
     <span
       role="img"
-      aria-label={`${title} — yeşil zeminde beyaz sancak`}
+      aria-label={title}
       className={`inline-grid shrink-0 place-items-center rounded-lg ${className}`}
       style={{
         width: size,

@@ -17,6 +17,7 @@ export async function updateSiteContent(key: string, data: unknown) {
     "services",
     "news",
     "clients",
+    "extraLinks",
     ...SITE_CONFIG_KEYS,
   ];
   if (!allowed.includes(key)) throw new Error("Invalid key");

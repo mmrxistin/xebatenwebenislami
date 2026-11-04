@@ -25,11 +25,11 @@ const sonDakika = [
   { title: "Kütüphane Günleri'nde imza ve söyleşi", href: "/malper/isler", cat: "ETKİNLİK" },
 ];
 const yazarlar = [
-  { title: "Susmak da bir anlatma biçimidir", author: "Mehmet Karakuş", href: "/malper/isler" },
-  { title: "Bir şehir unutur mu?", author: "Mehmet Karakuş", href: "/malper/isler" },
-  { title: "İlk cümle üzerine notlar", author: "Mehmet Karakuş", href: "/malper/isler" },
-  { title: "Okumanın sessiz telaşı", author: "Mehmet Karakuş", href: "/malper/isler" },
-  { title: "Defterin kenarındaki üç satır", author: "Mehmet Karakuş", href: "/malper/isler" },
+  { title: "Susmak da bir anlatma biçimidir", author: "Emanet", href: "/malper/isler" },
+  { title: "Bir şehir unutur mu?", author: "Emanet", href: "/malper/isler" },
+  { title: "İlk cümle üzerine notlar", author: "Emanet", href: "/malper/isler" },
+  { title: "Okumanın sessiz telaşı", author: "Emanet", href: "/malper/isler" },
+  { title: "Defterin kenarındaki üç satır", author: "Emanet", href: "/malper/isler" },
 ];
 
 function useAutoIndex(length: number) {

@@ -4,7 +4,7 @@
 // La ilahe ill Allah Muhammeden Rasulullah
 import { redirect } from "next/navigation";
 import { validateRequest } from "@/auth";
-import { getSiteConfig } from "@/lib/site-content";
+import { getSiteConfig, getSiteContent } from "@/lib/site-content";
 import UiEditor from "./UiEditor";
 import type { SiteUi } from "@/lib/site-config";
 
@@ -15,7 +15,13 @@ export default async function GorunumPage() {
   if (!user || user.role !== "ADMIN") redirect("/malper");
 
   const config = await getSiteConfig();
+  const content = await getSiteContent();
   const ui: SiteUi = config.ui;
+  const extraLinks = Array.isArray(content.extraLinks)
+    ? (content.extraLinks as { href: string; label: string }[]).filter(
+        (l) => l && typeof l.href === "string" && typeof l.label === "string",
+      )
+    : [];
 
   return (
     <UiEditor
@@ -23,6 +29,7 @@ export default async function GorunumPage() {
       initialTheme={config.theme}
       initialGeneral={config.general}
       initialSections={config.sections}
+      initialExtraLinks={extraLinks}
     />
   );
 }

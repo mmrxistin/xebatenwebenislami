@@ -66,7 +66,7 @@ export default function AgencyPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-zinc-950/20" />
         <div className="relative mx-auto w-full max-w-[1600px] px-4 py-24 sm:px-6 lg:px-8">
           <p className="mb-6 text-xs font-black uppercase tracking-[0.3em] text-[#ff4d00]">
-            Mehmet Karakuş — Yazar
+            Emanet
           </p>
           <h1 className="max-w-5xl text-5xl font-black uppercase leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
             Fikirleri

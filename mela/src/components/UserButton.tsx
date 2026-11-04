@@ -63,7 +63,7 @@ export default function UserButton({ className }: UserButtonProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Logged in as @{user.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={user.role === "ADMIN" ? "/" : "/malper/account"}>
+        <Link href={user.role === "ADMIN" ? "/" : "/malper/uye"}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 size-4" />
             {user.role === "ADMIN" ? "Yönetim Paneli" : "Hesabım"}

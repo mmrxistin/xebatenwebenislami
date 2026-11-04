@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 
 const ADMIN_USERNAME = "Emanet";
 const ADMIN_PASSWORD = "Emanet";
-const ADMIN_DISPLAY_NAME = "Yazar Mehmet Karakuş";
+const ADMIN_DISPLAY_NAME = "Yönetici";
 
 // Yönetici hesabını oluşturur / günceller.
 // Yalnızca ADMIN_SETUP_TOKEN env değişkeni doğru girildiğinde çalışır.

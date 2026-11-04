@@ -27,10 +27,10 @@ const Bingeh = () => (
       {/* Yazar Footer Top */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 mb-8 border-b border-zinc-200 gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-3xl font-black tracking-tight">MEHMET <span className="text-[#ff4d00]">KARAKUŞ</span></span>
+          <span className="text-3xl font-black tracking-tight">EMANET</span>
         </div>
         <p className="max-w-md text-sm text-zinc-500">
-          Roman, öykü ve denemeleriyle insanın ve şehrin hikâyesini yazan yazar.
+          Sade, reklamsız ve ticari olmayan bilgi sitesi.
         </p>
       </div>
 
@@ -107,7 +107,7 @@ Yazıları ve duyuruları sosyal medyada takip edin.
     <div className="border-t border-zinc-200 bg-[#fafafa] py-4 text-xs text-zinc-500">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 md:flex-row md:justify-between">
         <div>
-          © {new Date().getFullYear()} MEHMET KARAKUŞ. Tüm hakları saklıdır.         </div>
+          © {new Date().getFullYear()} Emanet. Tüm hakları saklıdır.         </div>
         <div className="flex gap-4">
           <a href="/gizlilik" className="transition-colors text-zinc-500 hover:text-[#ff4d00]">Gizlilik</a>
           <a href="/iletisim" className="transition-colors text-zinc-500 hover:text-[#ff4d00]">İletişim</a>

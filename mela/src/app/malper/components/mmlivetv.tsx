@@ -17,7 +17,7 @@ const YAYINLAR = [
   {
     id: "live",
     badge: "CANLI",
-    title: "Mehmet Karakuş — Canlı Söyleşi",
+    title: "Canlı Söyleşi",
     sub: "Kesintisiz yayın akışı",
     src: "https://www.youtube.com/embed/fZondUOmR9k?autoplay=0",
     live: true,
@@ -63,7 +63,7 @@ VİDEOLAR
           rel="noreferrer"
           className="mm-live-link"
         >
-Mehmet Karakuş Kanalı ↗
+Kanal ↗
         </a>
       </div>
 

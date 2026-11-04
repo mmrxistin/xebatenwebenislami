@@ -82,7 +82,7 @@ export default async function RootLayout({
 function Footer() {
   return (
     <footer className="flex items-center justify-center w-full h-16 bg-gray-800 text-white">
-      <p className="text-sm">© {new Date().getFullYear()} Yazar Mehmet Karakuş</p>
+      <p className="text-sm">© {new Date().getFullYear()} Emanet</p>
     </footer>
   );
 

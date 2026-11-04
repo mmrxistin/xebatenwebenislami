@@ -5,6 +5,8 @@
 
 // Site üzerindeyken yöneticiye görünen düzenleme çubuğu.
 // Her sayfadan tek tıkla ilgili yönetim ekranına götürür.
+// isAdmin=false ile çağrılırsa üyeye yönetim bağlantısı göstermez,
+// yalnızca kendi alanına (/malper/uye) ve siteye götürür.
 import React from "react";
 import Link from "next/link";
 import {
@@ -23,15 +25,21 @@ const links = [
   { href: "/kullanicilar", label: "Kullanıcılar", icon: UsersRound },
 ];
 
-export default function AdminSiteBar() {
+const memberLinks = [
+  { href: "/malper/uye", label: "Hesabım", icon: UsersRound },
+  { href: "/malper", label: "Siteye Dön", icon: Home },
+];
+
+export default function AdminSiteBar({ isAdmin = true }: { isAdmin?: boolean }) {
+  const items = isAdmin ? links : memberLinks;
   return (
     <div className="fixed inset-x-0 top-0 z-[60] border-b border-white/10 bg-zinc-950/95 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-2 sm:px-6 lg:px-10">
-        <span className="hidden text-[11px] font-bold uppercase tracking-[0.22em] text-red-300 sm:block">
-          Yönetici
+        <span className={`hidden text-[11px] font-bold uppercase tracking-[0.22em] sm:block ${isAdmin ? "text-red-300" : "text-white/50"}`}>
+          {isAdmin ? "Yönetici" : "Üye"}
         </span>
         <nav className="flex w-full items-center gap-1 overflow-x-auto sm:w-auto sm:justify-end">
-          {links.map((l) => (
+          {items.map((l) => (
             <Link
               key={l.href}
               href={l.href}

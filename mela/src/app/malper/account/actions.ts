@@ -35,6 +35,7 @@ export async function updateProfile(input: {
     data: { displayName, bio, ...(avatarUrl !== undefined ? { avatarUrl } : {}) },
   });
 
+  revalidatePath("/malper/uye");
   revalidatePath("/malper/account");
   return { ok: true };
 }

@@ -2492,10 +2492,20 @@ main .grid > div:hover {
   font-family: var(--site-font, system-ui, -apple-system, "Segoe UI", sans-serif);
 }
 
-/* Başlık ölçüsü */
-.site-theme-root h1,
-.site-theme-root h2 {
+/* Başlık ölçüsü: yalnızca site içerik başlıkları; menü, kart, panel ve alt bilgi
+   başlıkları kendi ölçüsünde kalır (yönetici/üye çubuğu ve menü bozulmaz). */
+.site-theme-root .site-main-pad h1,
+.site-theme-root .site-main-pad h2 {
   font-size: var(--site-headline, 30px);
+}
+
+/* Üst çubuk (yönetici/üye) açıkken site menüsü onun hemen altına gelir. */
+.site-theme-root .site-menu-offset {
+  margin-top: var(--site-bar-h, 0px);
+}
+
+.site-theme-root .site-menu-offset header {
+  top: var(--site-bar-h, 0px) !important;
 }
 
 /* Site içindeki buton ve bağlantı butonları */
@@ -2519,4 +2529,9 @@ main .grid > div:hover {
 /* Site içerik sayfaları bu dolguyu alır; /malper ana sayfası çubuğa değmez. */
 .site-main-pad {
   padding-top: 2rem;
+}
+
+/* Üstte yönetici/üye çubuğu varsa üst menü onun altında başlar. */
+.site-theme-root .site-menu-offset {
+  margin-top: var(--site-bar-h, 0px);
 }

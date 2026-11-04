@@ -46,7 +46,7 @@ function Mmmnavbar() {
 
             <div className="flex min-w-[60px] items-center justify-start">
               <Link href="/malper" className="text-lg font-black uppercase tracking-tight text-zinc-900 dark:text-zinc-50">
-MEHMET <span className="text-[#ff4d00]">KARAKUŞ</span>
+EMANET
               </Link>
             </div>
 

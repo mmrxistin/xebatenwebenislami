@@ -24,7 +24,7 @@ export default async function Layout({
   const { user } = await validateRequest();
 
   // Girişli kullanıcı giriş ekranına geri dönerse yönetim ya da hesabına gider.
-  if (user) redirect(user.role === "ADMIN" ? "/" : "/malper/account");
+  if (user) redirect(user.role === "ADMIN" ? "/" : "/malper/uye");
 
   return <>{children}</>;
 } // El Hamdu Lillah Kesira

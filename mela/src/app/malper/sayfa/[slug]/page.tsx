@@ -47,7 +47,7 @@ export default async function MalperDynamicPage({ params }: MalperPageProps) {
         </Link>
 
         <header className={`overflow-hidden rounded-[2rem] border border-white/10 ${page.layout === "feature" ? "bg-gradient-to-br from-[#bb1919] via-[#3b0a0a] to-zinc-950 p-8 sm:p-12" : "bg-zinc-900 p-8 sm:p-12"}`}>
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4d00]">Mehmet Karakuş</p>
+
           <h1 className="mt-4 max-w-3xl text-4xl font-black tracking-tight sm:text-6xl">{page.title}</h1>
           {page.description && <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-300">{page.description}</p>}
         </header>

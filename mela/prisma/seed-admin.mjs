@@ -2,7 +2,7 @@
 // El Hamdu Lillahi Rabbul Alemin
 // Esselatu vesselamu ala rasulina Muhammedin
 // Yönetici hesabını oluşturur / günceller: kullanıcı adı = Emanet, şifre = Emanet
-// (Ayrıca görünen ad ve site içeriğindeki yazar adı "Yazar Mehmet Karakuş" olur.)
+// (Görünen ad "Yönetici" olur.)
 // Kullanım:
 //   npm run seed:admin       (yerel: .env / .env.local okunur)
 //   npx prisma db seed       (Prisma üzerinden aynı script)
@@ -41,8 +41,7 @@ for (const file of [".env.local", ".env.production.local", ".env"]) {
 
 const ADMIN_USERNAME = "Emanet";
 const ADMIN_PASSWORD = "Emanet";
-const AUTHOR_DISPLAY_NAME = "Yazar Mehmet Karakuş";
-const AUTHOR_TITLE = "Yazar Mehmet Karakuş";
+const ADMIN_DISPLAY_NAME = "Yönetici";
 
 const prisma = new PrismaClient();
 
@@ -69,7 +68,7 @@ async function main() {
           where: { id: target.id },
           data: {
             username: ADMIN_USERNAME,
-            displayName: AUTHOR_DISPLAY_NAME,
+            displayName: ADMIN_DISPLAY_NAME,
             passwordHash,
             role: "ADMIN",
           },
@@ -78,23 +77,13 @@ async function main() {
       data: {
         id: crypto.randomUUID().replace(/-/g, "").slice(0, 15),
         username: ADMIN_USERNAME,
-        displayName: AUTHOR_DISPLAY_NAME,
+        displayName: ADMIN_DISPLAY_NAME,
         passwordHash,
         role: "ADMIN",
       },
     });
 
-  // Site içeriğindeki yazar adı alanlarını güncelle (JSON: authorName / author)
-  const contents = await prisma.siteContent.findMany();
-  for (const row of contents) {
-    const data = row.data;
-    if (!data || typeof data !== "object" || Array.isArray(data)) continue;
-    if (!("authorName" in data) && !("author" in data)) continue;
-    const next = { ...data };
-    if ("authorName" in next) next.authorName = AUTHOR_TITLE;
-    if ("author" in next) next.author = AUTHOR_TITLE;
-    await prisma.siteContent.update({ where: { id: row.id }, data: { data: next } });
-  }
+
 
   console.log(`Admin hazır: username=${user.username} displayName=${user.displayName}`);
 }

@@ -94,7 +94,9 @@ export default function DentsuPage() {
           <a href="#hakkinda" className="hover-line">Hakkımda</a>
           <a href="#iletisim" className="hover-line">İletişim</a>
         </div>
-        <div className="text-sm font-bold tracking-[0.3em] uppercase">Mehmet Karakuş</div>
+        <Link href="/malper" className="text-sm font-bold tracking-[0.3em] uppercase no-underline">
+          Emanet
+        </Link>
       </nav>
 
       {/* HERO */}

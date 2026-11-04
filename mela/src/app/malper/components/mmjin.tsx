@@ -13,14 +13,14 @@ const jinArticles = [
   {
     id: 1,
     title: "Hafıza, susmak ve yazmak üzerine bir söyleşi",
-    author: "Mehmet Karakuş",
+    author: "Emanet",
     img: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80",
     href: "/malper/hizmetler"
   },
   {
     id: 2,
     title: "Bir kitabın doğuşu: İlk cümleden son sayfaya",
-    author: "Mehmet Karakuş",
+    author: "Emanet",
     img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80",
     href: "/malper/hizmetler"
   }
